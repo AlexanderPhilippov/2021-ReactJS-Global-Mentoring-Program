@@ -1,11 +1,15 @@
 import React from 'react';
+import { Component, PureComponent, FunctionalComponent, ReactElement } from './Components/TaskOneComponents';
 
 
 const App = () => {
   return (
     <div>
-    Hello world!
-  </div>
+      <Component componentName = "React.Component"/>
+      <PureComponent />
+      <FunctionalComponent />
+      <ReactElement />
+    </div>
   )
 }
 
