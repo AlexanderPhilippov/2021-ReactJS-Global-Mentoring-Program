@@ -1,0 +1,18 @@
+.counter {
+    border: 1px dotted black;
+    padding: 25px;
+    line-height: 2em;
+}
+
+.counter__value{
+    font-weight: bold;
+}
+
+.counter__info {
+    font-size: small;
+    font-style: italic;
+}
+
+.counter_button{
+    margin: 0 0.5em;
+}
