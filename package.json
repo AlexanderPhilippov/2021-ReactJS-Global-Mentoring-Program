@@ -1,0 +1,27 @@
+{
+  "name": "2021-reactjs-global-mentoring-program",
+  "version": "1.0.0",
+  "description": "EPAM React JS Global Mentoring Programm 2021",
+  "private": true,
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexanderPhilippov/2021-ReactJS-Global-Mentoring-Program.git"
+  },
+  "keywords": [
+    "React",
+    "WebPack",
+    "Babel",
+    "TypeScript"
+  ],
+  "author": "Alexander Philippov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexanderPhilippov/2021-ReactJS-Global-Mentoring-Program/issues"
+  },
+  "homepage": "https://github.com/AlexanderPhilippov/2021-ReactJS-Global-Mentoring-Program#readme",
+  "devDependencies": {
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0"
+  }
+}
