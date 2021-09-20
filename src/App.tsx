@@ -1,12 +1,12 @@
 import React from 'react';
-import SimpleCounter from './Components/SimpleCounter';
+import SimpleCounter from 'Components/SimpleCounter';
 
-export default () => {
-  const greetings: string = 'Hello from React and TypeScript!!! - Manualy configured WebPack!!!'
+const App: React.FC<{}> = () => {
   return (
     <div className='main'>
-      <div>{greetings}</div>
       <SimpleCounter />
     </div>
   );
 };
+
+export default App;
