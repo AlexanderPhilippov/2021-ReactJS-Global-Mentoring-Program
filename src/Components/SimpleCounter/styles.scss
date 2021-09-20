@@ -1,0 +1,11 @@
+.simple-counter{
+    display: block;
+    border: 1px dotted coral;
+    line-height: 2em;
+    &__value{
+        font-weight: bold;
+    }
+    &__info{
+        font-style: italic;
+    }
+}
