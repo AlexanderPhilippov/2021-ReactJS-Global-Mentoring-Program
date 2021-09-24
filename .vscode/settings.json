@@ -3,4 +3,10 @@
     "typescript.showUnused": false,
     "javascript.suggestionActions.enabled": false,
     "typescript.suggestionActions.enabled": false,
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ]
 }
