@@ -19,6 +19,7 @@
     "paths": {
         "Components": ["src/Components/index"],
         "Components/*": ["src/Components/*"],
+        "Assets/*": ["src/Assets/*"],
       }
   },
   "include": ["src"],
