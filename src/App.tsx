@@ -1,11 +1,13 @@
 import React from 'react'
-import SimpleCounter from 'Components/SimpleCounter'
+import { Header, Footer, MovieList } from 'Components'
 
-const App: React.FC<{}> = () => {
+const App: React.FC = () => {
     return (
-        <div className='main'>
-            <SimpleCounter />
-        </div>
+        <>
+            <Header />
+            <MovieList />
+            <Footer />
+        </>
     )
 }
 
