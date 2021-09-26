@@ -1,11 +1,13 @@
 import React from 'react'
-import { Header, Footer, MovieList } from 'Components'
+import { Header, Footer, MovieList, ErrorBoundary } from 'Components'
 
 const App: React.FC = () => {
     return (
         <>
             <Header />
-            <MovieList />
+            <ErrorBoundary>
+                <MovieList />
+            </ErrorBoundary>
             <Footer />
         </>
     )
