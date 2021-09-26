@@ -1,12 +1,12 @@
-import React from 'react';
-import SimpleCounter from 'Components/SimpleCounter';
+import React from 'react'
+import SimpleCounter from 'Components/SimpleCounter'
 
 const App: React.FC<{}> = () => {
-  return (
-    <div className='main'>
-      <SimpleCounter />
-    </div>
-  );
-};
+    return (
+        <div className='main'>
+            <SimpleCounter />
+        </div>
+    )
+}
 
-export default App;
+export default App

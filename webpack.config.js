@@ -1,12 +1,12 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-const isDev = process.env.NODE_ENV === 'development';
-const isProd = !isDev;
+const isDev = process.env.NODE_ENV === 'development'
+const isProd = !isDev
 
 module.exports = {
     mode: process.env.NODE_ENV,
@@ -29,16 +29,17 @@ module.exports = {
         rules:[
             {
                 test: /\.(js|jsx|ts|tsx)$/,
-                exclude: /node_modules/,
+                exclude: [/node_modules/, /dist/],
                 use: [
                     {
                         loader: 'babel-loader',
                         options: {
                             presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript']
                         }
-                    }
+                    },
+                    'eslint-loader'
                 ]
-            }, 
+            },
             {
                 test: /\.s[ac]ss$/,
                 use: [
