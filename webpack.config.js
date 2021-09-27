@@ -22,7 +22,8 @@ module.exports = {
         modules: [path.join(__dirname, 'src'), 'node_modules'],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         alias: {
-            Components: path.resolve(__dirname, 'src/Components')
+            Components: path.resolve(__dirname, 'src/Components'),
+            Assets: path.resolve(__dirname, 'src/Assets')
         }
     },
     module:{
@@ -77,7 +78,7 @@ module.exports = {
         }
     },
     performance: {
-        hints: isProd ? 'error' : false,
+        hints: false,
     },
     devServer: {
         port: 3000
