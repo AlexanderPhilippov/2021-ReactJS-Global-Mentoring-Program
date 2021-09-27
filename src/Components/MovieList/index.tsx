@@ -9,8 +9,8 @@ const MovieList: React.FC = () => {
     return (
         <div className="movie-list">
             <MoviesHeader total={MoviesMockData.totalAmount}/>
-            {(MoviesMockData as MoviesResponseModel)?.data.map(x => (
-                <Movie key={x.id} movie={x} />
+            {(MoviesMockData as MoviesResponseModel)?.data.map(movie => (
+                <Movie key={movie.id} movie={movie} />
             ))}
         </div>
     )
