@@ -8,7 +8,7 @@ import { MoviesHeader } from './Header'
 const MovieList: React.FC = () => {
     return (
         <div className="movie-list">
-            <MoviesHeader />
+            <MoviesHeader total={MoviesMockData.totalAmount}/>
             {(MoviesMockData as MoviesResponseModel)?.data.map(x => (
                 <Movie key={x.id} movie={x} />
             ))}

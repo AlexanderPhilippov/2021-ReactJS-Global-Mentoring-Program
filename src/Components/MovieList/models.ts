@@ -6,3 +6,7 @@ export interface MoviesResponseModel {
     offset: number
     limit: number
 }
+
+export interface MoviesHeaderProps {
+    total: number
+}
