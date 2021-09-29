@@ -12,22 +12,22 @@ module.exports = {
     mode: process.env.NODE_ENV,
     context: path.join(__dirname, 'src'),
     entry: {
-        main: ['@babel/polyfill', 'index.tsx']
+        main: ['@babel/polyfill', 'index.tsx'],
     },
     output: {
         filename: isProd ? '[name].[fullhash].js' : '[name].js',
-        path: path.join(__dirname, 'dist')
+        path: path.join(__dirname, 'dist'),
     },
     resolve: {
         modules: [path.join(__dirname, 'src'), 'node_modules'],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         alias: {
             Components: path.resolve(__dirname, 'src/Components'),
-            Assets: path.resolve(__dirname, 'src/Assets')
-        }
+            Assets: path.resolve(__dirname, 'src/Assets'),
+        },
     },
-    module:{
-        rules:[
+    module: {
+        rules: [
             {
                 test: /\.(js|jsx|ts|tsx)$/,
                 exclude: [/node_modules/, /dist/],
@@ -35,25 +35,29 @@ module.exports = {
                     {
                         loader: 'babel-loader',
                         options: {
-                            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript']
-                        }
+                            presets: [
+                                '@babel/preset-env',
+                                '@babel/preset-react',
+                                '@babel/preset-typescript',
+                            ],
+                        },
                     },
-                    'eslint-loader'
-                ]
+                    'eslint-loader',
+                ],
             },
             {
                 test: /\.s[ac]ss$/,
                 use: [
-                    {loader: MiniCssExtractPlugin.loader},
+                    { loader: MiniCssExtractPlugin.loader },
                     'css-loader',
-                    'sass-loader'
-                ]
+                    'sass-loader',
+                ],
             },
             {
                 test: /\.(png|jpg|svg|gif|ttf|woff|woff2|eot)/,
-                use: ['file-loader']
-            }
-        ]
+                use: ['file-loader'],
+            },
+        ],
     },
     devtool: isDev ? 'source-map' : false,
     plugins: [
@@ -63,24 +67,24 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({
             filename: isProd ? '[name].[fullhash].css' : '[name].css',
-            chunkFilename: '[name].[chunkhash].css'
+            chunkFilename: '[name].[chunkhash].css',
         }),
     ],
-    optimization:{
+    optimization: {
         minimizer: [
             new OptimizeCssAssetWebpackPlugin(),
             new TerserWebpackPlugin({
-                extractComments: false
-            })
+                extractComments: false,
+            }),
         ],
         splitChunks: {
-            chunks: 'all'
-        }
+            chunks: 'all',
+        },
     },
     performance: {
         hints: false,
     },
     devServer: {
-        port: 3000
-    }
+        port: 3000,
+    },
 }

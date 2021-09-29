@@ -8,7 +8,11 @@
     "build": "cross-env NODE_ENV=production webpack",
     "build:dev": "cross-env NODE_ENV=development webpack",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --color",
-    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --color --fix"
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --color --fix",
+    "lint:styles": "npx stylelint **/*.scss",
+    "lint:styles:fix": "npx stylelint **/*.scss --fix",
+    "format:ts": "npx prettier --write **/*.ts",
+    "format:tsx": "npx prettier --write **/*.tsx"
   },
   "repository": {
     "type": "git",
@@ -50,7 +54,10 @@
     "mini-css-extract-plugin": "^2.3.0",
     "node-sass": "^6.0.1",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "prettier": "2.4.1",
     "sass-loader": "^12.1.0",
+    "stylelint": "^13.13.1",
+    "stylelint-config-standard": "^22.0.0",
     "terser-webpack-plugin": "^5.2.4",
     "typescript": "^4.4.3",
     "webpack": "^5.53.0",

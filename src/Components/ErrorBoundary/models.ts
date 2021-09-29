@@ -11,4 +11,3 @@ export interface ErrorBlockProps {
 export interface ErrorBoundaryState extends ErrorBlockProps {
     hasError: boolean
 }
-

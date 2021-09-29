@@ -1,8 +1,12 @@
 import React from 'react'
-import { ErrorBlockProps, ErrorBoundaryProps, ErrorBoundaryState } from './models'
+import {
+    ErrorBlockProps,
+    ErrorBoundaryProps,
+    ErrorBoundaryState,
+} from './models'
 import './styles.scss'
 
-const ErrorBlock: React.FC<ErrorBlockProps> = ({error}) => {
+const ErrorBlock: React.FC<ErrorBlockProps> = ({ error }) => {
     return (
         <div className="error-boundary">
             <div className="error-boundary__body">
@@ -19,13 +23,15 @@ const ErrorBlock: React.FC<ErrorBlockProps> = ({error}) => {
     )
 }
 
-
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class ErrorBoundary extends React.Component<
+    ErrorBoundaryProps,
+    ErrorBoundaryState
+> {
     constructor(props: ErrorBoundaryProps) {
         super(props)
         this.state = {
             hasError: false,
-            error: undefined
+            error: undefined,
         }
     }
 
@@ -34,7 +40,11 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
     }
 
     render(): React.ReactNode {
-        return this.state.hasError ? <ErrorBlock error={this.state.error}/> : this.props.children
+        return this.state.hasError ? (
+            <ErrorBlock error={this.state.error} />
+        ) : (
+            this.props.children
+        )
     }
 }
 

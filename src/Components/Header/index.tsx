@@ -9,10 +9,18 @@ const Header: React.FC = () => {
             <div className="header__text-logo">
                 <span>netflix</span>roulette
             </div>
-            <input className="header__add-movie_button" type="button" value="+ add movie" />
+            <input
+                className="header__add-movie_button"
+                type="button"
+                value="+ add movie"
+            />
             <div className="header__search">
                 <label htmlFor="searchMovieInput">Find your movie</label>
-                <input id="searchMovieInput" type="text" placeholder="What do you want to watch?" />
+                <input
+                    id="searchMovieInput"
+                    type="text"
+                    placeholder="What do you want to watch?"
+                />
                 <input type="button" value="search" />
             </div>
         </div>

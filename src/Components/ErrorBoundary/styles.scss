@@ -1,21 +1,21 @@
 .error-boundary {
-   color: lightgray;
-   position: relative;
-   display: flex;
-   min-height: 90vh;
-   padding: 25px;
-   text-align: center;
-   justify-content: center;
-   align-items: center;
-   
-   &__body {
-       border: white 3px dotted;
-       background-color: crimson;
-       width: 600px;
-       padding: 25px;
-   }
+  color: lightgray;
+  position: relative;
+  display: flex;
+  min-height: 90vh;
+  padding: 25px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 
-   &__message {
-       margin-top: 20px;
-   }
+  &__body {
+    border: white 3px dotted;
+    background-color: crimson;
+    width: 600px;
+    padding: 25px;
+  }
+
+  &__message {
+    margin-top: 20px;
+  }
 }
