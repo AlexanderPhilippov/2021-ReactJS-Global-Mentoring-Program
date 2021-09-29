@@ -15,7 +15,9 @@ interface FieldsOptional {
     revenue: number
 }
 
-interface MovieBaseModel extends Required<FieldsRequired>, Partial<FieldsOptional> {}
+interface MovieBaseModel
+    extends Required<FieldsRequired>,
+        Partial<FieldsOptional> {}
 
 export interface MovieModel extends MovieBaseModel {
     id: number

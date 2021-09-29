@@ -2,7 +2,7 @@ import React from 'react'
 import './styles.scss'
 
 const Footer: React.FC = () => {
-    return(
+    return (
         <div className="footer">
             <div className="footer__text-logo">
                 <span>netflix</span>roulette

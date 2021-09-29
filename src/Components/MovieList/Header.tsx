@@ -1,7 +1,7 @@
 import React from 'react'
 import { MoviesHeaderProps } from './models'
 
-const MoviesHeader: React.FC<MoviesHeaderProps> = ({total}) => {
+const MoviesHeader: React.FC<MoviesHeaderProps> = ({ total }) => {
     return (
         <div className="movie-list-header">
             <div className="movie-list-header__genres">
@@ -18,9 +18,11 @@ const MoviesHeader: React.FC<MoviesHeaderProps> = ({total}) => {
                     <option>other</option>
                 </select>
             </div>
-            <div className="movie-list-header__total"><span>{total || 0}</span>&nbsp;movies found</div>
+            <div className="movie-list-header__total">
+                <span>{total || 0}</span>&nbsp;movies found
+            </div>
         </div>
     )
 }
 
-export {MoviesHeader}
+export { MoviesHeader }
