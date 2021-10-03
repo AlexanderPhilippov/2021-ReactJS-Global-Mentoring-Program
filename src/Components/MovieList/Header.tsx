@@ -14,7 +14,7 @@ const MoviesHeader: React.FC<MoviesHeaderProps> = ({ total }) => {
             <div className="movie-list-header__sorting">
                 <div>sort by</div>
                 <select>
-                    <option selected>release date</option>
+                    <option>release date</option>
                     <option>other</option>
                 </select>
             </div>
