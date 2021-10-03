@@ -6,13 +6,13 @@ import { MovieFormAction } from 'Components/MovieForm/models'
 import './styles.scss'
 
 const Header: React.FC = () => {
-    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     return (
         <>
             <Modal
-                isOpen={isModalVisible}
-                closeAction={() => setIsModalVisible(false)}
+                isOpen={isModalOpen}
+                closeAction={() => setIsModalOpen(false)}
                 Content={() => MovieForm({action: MovieFormAction.ADD})}
             />
             <div className="header">
@@ -24,7 +24,7 @@ const Header: React.FC = () => {
                     className="header__add-movie_button"
                     type="button"
                     value="+ add movie"
-                    onClick={() => setIsModalVisible(!isModalVisible)}
+                    onClick={() => setIsModalOpen(!isModalOpen)}
                 />
                 <div className="header__search">
                     <label htmlFor="searchMovieInput">Find your movie</label>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useReducer } from 'react'
 import Movie from 'Components/Movie'
-import { MoviesResponseModel } from './models'
+import { MovieListLocalState, MovieListReducerAction, MoviesResponseModel } from './models'
 import MoviesMockData from './movies.json'
 import { MoviesHeader } from './Header'
 import { Modal } from 'Components'
@@ -9,40 +9,60 @@ import { MovieFormAction } from 'Components/MovieForm/models'
 import './styles.scss'
 import { MovieModel } from 'Components/Movie/models'
 
+
+
+const reducer = (state: MovieListLocalState, action: MovieListReducerAction) => {
+    return action.payload
+}
+
+const initialState: MovieListLocalState = {
+    isModalOpen: false,
+    selectedMovie: undefined,
+    currentAction: undefined,
+}
+
 const MovieList: React.FC = () => {
-    const [isModalVisible, setIsModalVisible] = useState(false)
-    const [selectedMovie, setSelectedMovie] = useState<MovieModel>()
-    const [currentAction, setCurrentAction] = useState<MovieFormAction | undefined>(undefined)
+    const [state, dispatch] = useReducer(reducer, initialState)
 
     const handleEdit = (movie: MovieModel) => {
-        setSelectedMovie(movie)
-        setCurrentAction(MovieFormAction.EDIT)
+        dispatch({
+            payload: {
+                selectedMovie: movie,
+                currentAction: MovieFormAction.EDIT,
+                isModalOpen: true,
+            },
+        })
     }
 
     const handleDelete = (movie: MovieModel) => {
-        setSelectedMovie(movie)
-        setCurrentAction(MovieFormAction.DELETE)
+        dispatch({
+            payload: {
+                selectedMovie: movie,
+                currentAction: MovieFormAction.DELETE,
+                isModalOpen: true,
+            },
+        })
     }
 
     const handleClose = () => {
-        setIsModalVisible(false)
-        setSelectedMovie(undefined)
+        dispatch({
+            payload: {
+                selectedMovie: undefined,
+                currentAction: undefined,
+                isModalOpen: false,
+            },
+        })
     }
-
-    useEffect(() => {
-        if (isModalVisible) return
-        if (selectedMovie) setIsModalVisible(true)
-    }, [selectedMovie])
 
     return (
         <>
             <Modal
-                isOpen={isModalVisible}
+                isOpen={state.isModalOpen}
                 closeAction={handleClose}
                 Content={() =>
                     MovieForm({
-                        action: currentAction,
-                        movie: selectedMovie,
+                        action: state.currentAction,
+                        movie: state.selectedMovie,
                     })
                 }
             />

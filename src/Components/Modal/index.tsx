@@ -4,11 +4,7 @@ import './styles.scss'
 
 const Modal: React.FC<ModalProps> = ({ isOpen, closeAction, Content }) => {
     useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden'
-        } else {
-            document.body.style.overflow = 'unset'
-        }
+        document.body.style.overflow = isOpen ? 'hidden' : 'unset'
     }, [isOpen])
 
     return isOpen ? (
