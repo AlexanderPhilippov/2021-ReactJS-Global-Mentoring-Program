@@ -17,6 +17,10 @@ const MovieList: React.FC = () => {
         setSelectedMovie(movie)
     }
 
+    const handleDelete = (movie: MovieModel) => {
+        setSelectedMovie(movie)
+    }
+
     const handleClose = () => {
         setIsModalVisible(false)
         setSelectedMovie(undefined)
@@ -46,6 +50,7 @@ const MovieList: React.FC = () => {
                         key={movie.id}
                         movie={movie}
                         handleEdit={() => handleEdit(movie)}
+                        handleDelete={() => handleDelete(movie)}
                     />
                 ))}
             </div>
