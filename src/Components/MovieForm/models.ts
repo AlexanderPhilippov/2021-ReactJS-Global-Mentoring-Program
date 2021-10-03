@@ -6,6 +6,6 @@ export enum MovieFormAction {
     DELETE = 'Delete movie',
 }
 export interface MovieFormProps {
-    action: MovieFormAction,
+    action: MovieFormAction | undefined,
     movie?: MovieModel,
 }

@@ -12,13 +12,16 @@ import { MovieModel } from 'Components/Movie/models'
 const MovieList: React.FC = () => {
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [selectedMovie, setSelectedMovie] = useState<MovieModel>()
+    const [currentAction, setCurrentAction] = useState<MovieFormAction | undefined>(undefined)
 
     const handleEdit = (movie: MovieModel) => {
         setSelectedMovie(movie)
+        setCurrentAction(MovieFormAction.EDIT)
     }
 
     const handleDelete = (movie: MovieModel) => {
         setSelectedMovie(movie)
+        setCurrentAction(MovieFormAction.DELETE)
     }
 
     const handleClose = () => {
@@ -38,7 +41,7 @@ const MovieList: React.FC = () => {
                 closeAction={handleClose}
                 Content={() =>
                     MovieForm({
-                        action: MovieFormAction.EDIT,
+                        action: currentAction,
                         movie: selectedMovie,
                     })
                 }
