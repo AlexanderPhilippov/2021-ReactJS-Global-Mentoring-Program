@@ -2,7 +2,7 @@ import React from 'react'
 import { MovieFormProps } from './models'
 import './styles.scss'
 
-const AddMovieForm: React.FC<MovieFormProps> = ({action, movie}) => {
+const MovieForm: React.FC<MovieFormProps> = ({action, movie}) => {
     return (
         <form className="movie-form">
             <div className="movie-form__container">
@@ -13,33 +13,27 @@ const AddMovieForm: React.FC<MovieFormProps> = ({action, movie}) => {
                 </div>
                 <div className="movie-form__right-column">
                     <label>release date</label>
-                    <input type="date" placeholder="Select date" />
+                    <input type="date" placeholder="Select date" defaultValue={movie?.release_date}/>
                 </div>
                 <div className="movie-form__left-column">
                     <label>movie url</label>
-                    <input placeholder="https://" />
+                    <input placeholder="https://" defaultValue={movie?.poster_path}/>
                 </div>
                 <div className="movie-form__right-column">
                     <label>rating</label>
-                    <input
-                        type="number"
-                        min="0"
-                        max="10"
-                        step="0.5"
-                        placeholder="7.8"
-                    />
+                    <input defaultValue={movie?.vote_average} />
                 </div>
                 <div className="movie-form__left-column">
                     <label>genre</label>
-                    <input placeholder="Select genre" />
+                    <input placeholder="Select genre" defaultValue={movie?.genres}/>
                 </div>
                 <div className="movie-form__right-column">
                     <label>runtime</label>
-                    <input placeholder="minutes" />
+                    <input placeholder="minutes" defaultValue={movie?.runtime}/>
                 </div>
                 <div className="movie-form__description">
                     <label>overview</label>
-                    <textarea placeholder="Movie description" />
+                    <textarea placeholder="Movie description" defaultValue={movie?.overview}/>
                 </div>
                 <div className="movie-form__buttons">
                     <input type="submit" value="submit" />
@@ -50,4 +44,4 @@ const AddMovieForm: React.FC<MovieFormProps> = ({action, movie}) => {
     )
 }
 
-export default AddMovieForm
+export default MovieForm

@@ -25,4 +25,5 @@ export interface MovieModel extends MovieBaseModel {
 
 export interface MovieProps {
     movie: MovieModel
+    handleEdit: () => void
 }

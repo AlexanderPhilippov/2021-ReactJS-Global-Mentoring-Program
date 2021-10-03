@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ModalProps } from './models'
 import './styles.scss'
 
-const Modal: React.FC<ModalProps> = ({
-    isOpen,
-    closeAction,
-    Content
-}) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, closeAction, Content }) => {
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = 'unset'
+        }
+    }, [isOpen])
+
     return isOpen ? (
         <div className="modal">
             <input

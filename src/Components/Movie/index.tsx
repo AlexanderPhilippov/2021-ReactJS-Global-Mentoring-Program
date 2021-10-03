@@ -2,9 +2,9 @@ import React from 'react'
 import { MovieProps } from './models'
 import './styles.scss'
 
-const Movie: React.FC<MovieProps> = ({ movie }) => {
+const Movie: React.FC<MovieProps> = ({ movie, handleEdit }) => {
     return (
-        <div className="movie-card">
+        <div className="movie-card" onClick={handleEdit}>
             <div className="movie-card__image">
                 <img src={movie.poster_path} alt={`${movie.title} poster`} />
             </div>
