@@ -1,10 +1,12 @@
 import React from 'react'
 import { MovieProps } from './models'
+import MovieCardMenu from './MovieCardMenu'
 import './styles.scss'
 
-const Movie: React.FC<MovieProps> = ({ movie }) => {
+const Movie: React.FC<MovieProps> = ({ movie, handleEdit, handleDelete }) => {
     return (
         <div className="movie-card">
+            <MovieCardMenu handleEdit={handleEdit} handleDelete={handleDelete}/>
             <div className="movie-card__image">
                 <img src={movie.poster_path} alt={`${movie.title} poster`} />
             </div>

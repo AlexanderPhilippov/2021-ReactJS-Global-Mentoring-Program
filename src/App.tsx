@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Footer, MovieList, ErrorBoundary } from 'Components'
+import { ErrorBoundary, Footer, Header, MovieList } from 'Components'
 
 const App: React.FC = () => {
     return (
