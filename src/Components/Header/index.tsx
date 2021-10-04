@@ -13,8 +13,9 @@ const Header: React.FC = () => {
             <Modal
                 isOpen={isModalOpen}
                 closeAction={() => setIsModalOpen(false)}
-                Content={() => MovieForm({action: MovieFormAction.ADD})}
-            />
+            >
+                <MovieForm action={MovieFormAction.ADD} />
+            </Modal>
             <div className="header">
                 <img className="header__image" src={image} />
                 <div className="header__text-logo">
@@ -24,7 +25,7 @@ const Header: React.FC = () => {
                     className="header__add-movie_button"
                     type="button"
                     value="+ add movie"
-                    onClick={() => setIsModalOpen(!isModalOpen)}
+                    onClick={() => setIsModalOpen((prevState) => !prevState)}
                 />
                 <div className="header__search">
                     <label htmlFor="searchMovieInput">Find your movie</label>

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { ModalProps } from './models'
 import './styles.scss'
 
-const Modal: React.FC<ModalProps> = ({ isOpen, closeAction, Content }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, closeAction, children }) => {
     useEffect(() => {
         document.body.style.overflow = isOpen ? 'hidden' : 'unset'
     }, [isOpen])
@@ -15,7 +15,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeAction, Content }) => {
                 className="modal__close"
                 onClick={closeAction}
             />
-            <Content />
+            {children}
         </div>
     ) : null
 }

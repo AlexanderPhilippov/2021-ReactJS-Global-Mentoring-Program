@@ -14,8 +14,8 @@ export interface MoviesHeaderProps {
 
 export interface MovieListLocalState {
     isModalOpen: boolean
-    selectedMovie: MovieModel | undefined
-    currentAction: MovieFormAction | undefined
+    selectedMovie?: MovieModel
+    currentAction?: MovieFormAction
 }
 
 export interface MovieListReducerAction {

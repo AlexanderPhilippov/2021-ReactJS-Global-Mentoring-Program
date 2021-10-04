@@ -1,11 +1,22 @@
 import React, { useState } from 'react'
 import { MovieActions } from './models'
 
-const MovieCardMenu: React.FC<MovieActions> = ({
-    handleEdit,
-    handleDelete,
-}) => {
+const MovieCardMenu: React.FC<MovieActions> = (props) => {
     const [isOpen, setIsOpen] = useState(false)
+
+    const handleClose = () => {
+        setIsOpen((prevState) => !prevState)
+    }
+
+    const handleEdit = () => {
+        props.handleEdit()
+        handleClose()
+    }
+
+    const handleDelete = () => {
+        props.handleDelete()
+        handleClose()
+    }
 
     return !isOpen ? (
         <div
@@ -14,9 +25,9 @@ const MovieCardMenu: React.FC<MovieActions> = ({
         ></div>
     ) : (
         <div className="movie-card__menu_opened">
-            <div onClick={() =>{handleEdit(); setIsOpen(false)}}>Edit</div>
-            <div onClick={() => {handleDelete(); setIsOpen(false)}}>Delete</div>
-            <div onClick={() => setIsOpen(false)}>Close menu</div>
+            <div onClick={handleEdit}>Edit</div>
+            <div onClick={handleDelete}>Delete</div>
+            <div onClick={handleClose}>Close menu</div>
         </div>
     )
 }
