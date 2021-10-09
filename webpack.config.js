@@ -55,7 +55,14 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|svg|gif|ttf|woff|woff2|eot)/,
-                use: ['file-loader'],
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'images/[hash]-[name].[ext]'
+                        }
+                    },
+                ],
             },
         ],
     },

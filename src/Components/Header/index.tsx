@@ -1,12 +1,14 @@
-import MovieForm from 'Components/MovieForm'
-import { Modal } from 'Components'
 import React, { useState } from 'react'
+import { Modal } from 'Components'
 import { MovieFormAction } from 'Components/MovieForm/models'
-import './styles.scss'
+import MovieForm from 'Components/MovieForm'
 import SearchPanel from './SearchPanel'
+import MovieDetailsPanel from './MovieDetailsPanel'
+import './styles.scss'
 
 const Header: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isSearchActive, setIsSearchActive] = useState(false)
 
     return (
         <>
@@ -17,7 +19,11 @@ const Header: React.FC = () => {
                 <MovieForm action={MovieFormAction.ADD} />
             </Modal>
             <div className="header">
-                <SearchPanel modalToggle={setIsModalOpen}/>
+                {isSearchActive ? (
+                    <SearchPanel modalToggle={setIsModalOpen} />
+                ) : (
+                    <MovieDetailsPanel closeAction={() => setIsSearchActive(true)} />
+                )}
             </div>
         </>
     )
