@@ -1,12 +1,17 @@
-import React from 'react'
+import { Context } from 'Components/Context'
+import React, {useContext} from 'react'
 import { MovieProps } from './models'
 import MovieCardMenu from './MovieCardMenu'
 import './styles.scss'
 
 const Movie: React.FC<MovieProps> = ({ movie, handleEdit, handleDelete }) => {
+    const { setContext } = useContext(Context)
     return (
-        <div className="movie-card">
-            <MovieCardMenu handleEdit={handleEdit} handleDelete={handleDelete}/>
+        <div className="movie-card" onClick={() => setContext(movie)}>
+            <MovieCardMenu
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+            />
             <div className="movie-card__image">
                 <img src={movie.poster_path} alt={`${movie.title} poster`} />
             </div>

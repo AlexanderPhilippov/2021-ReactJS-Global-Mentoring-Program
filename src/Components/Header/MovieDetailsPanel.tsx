@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import HeaderTextLogo from './HeaderTextLogo'
 import MovieDetails from 'Components/MovieDetails'
 import SearchIcon from 'Assets/Images/search.png'
-import { MovieDetailsPanelProps } from './models'
+import { Context } from 'Components/Context'
+import { MovieModel } from 'Components/Movie/models'
 
-const MovieDetailsPanel: React.FC<MovieDetailsPanelProps> = ({closeAction}) => {
+const MovieDetailsPanel: React.FC = () => {
+    const { context, setContext } = useContext(Context)
     return (
         <>
             <HeaderTextLogo />
-            <img className="header__search-icon" src={SearchIcon} onClick={closeAction} />
-            <MovieDetails />
+            <img
+                className="header__search-icon"
+                src={SearchIcon}
+                onClick={() => setContext({})}
+            />
+            <MovieDetails movie={context as MovieModel} />
         </>
     )
 }
