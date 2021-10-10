@@ -27,10 +27,7 @@ const MovieCardMenu: React.FC<MovieActions> = (props) => {
     }
 
     return !isOpen ? (
-        <div
-            className="movie-card__menu_closed"
-            onClick={handleOpen}
-        ></div>
+        <div className="movie-card__menu_closed" onClick={handleOpen}></div>
     ) : (
         <div className="movie-card__menu_opened">
             <div onClick={handleEdit}>Edit</div>

@@ -13,7 +13,7 @@ const MovieDetailsPanel: React.FC = () => {
             <img
                 className="header__search-icon"
                 src={SearchIcon}
-                onClick={() => setContext({})}
+                onClick={() => setContext()}
             />
             <MovieDetails movie={context as MovieModel} />
         </>

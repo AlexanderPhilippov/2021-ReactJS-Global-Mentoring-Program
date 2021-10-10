@@ -28,6 +28,6 @@ export interface MovieActions {
     handleDelete: () => void
 }
 
-export interface MovieProps extends MovieActions{
+export interface MovieProps extends MovieActions {
     movie: MovieModel
 }

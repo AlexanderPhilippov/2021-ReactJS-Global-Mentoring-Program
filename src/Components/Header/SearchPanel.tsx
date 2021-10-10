@@ -4,8 +4,7 @@ import HeaderTextLogo from './HeaderTextLogo'
 import { SearchPanelProps } from './models'
 import './styles.scss'
 
-const SearchPanel: React.FC<SearchPanelProps> = ({modalToggle}) => {
-
+const SearchPanel: React.FC<SearchPanelProps> = ({ modalToggle }) => {
     return (
         <>
             <img className="header__image" src={image} />
