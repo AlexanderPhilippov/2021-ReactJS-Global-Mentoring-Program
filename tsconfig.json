@@ -19,6 +19,8 @@
     "paths": {
         "Components": ["src/Components/index"],
         "Components/*": ["src/Components/*"],
+        "Utils": ["src/Utils/index"],
+        "Utils/*": ["src/Utils/*"],
         "Assets/*": ["src/Assets/*"],
       }
   },

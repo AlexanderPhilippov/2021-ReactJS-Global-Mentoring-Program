@@ -4,24 +4,32 @@ import { MovieActions } from './models'
 const MovieCardMenu: React.FC<MovieActions> = (props) => {
     const [isOpen, setIsOpen] = useState(false)
 
-    const handleClose = () => {
+    const handleOpen = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        setIsOpen(true)
+    }
+
+    const handleClose = (e: React.MouseEvent) => {
+        e.stopPropagation()
         setIsOpen((prevState) => !prevState)
     }
 
-    const handleEdit = () => {
+    const handleEdit = (e: React.MouseEvent) => {
+        e.stopPropagation()
         props.handleEdit()
-        handleClose()
+        setIsOpen((prevState) => !prevState)
     }
 
-    const handleDelete = () => {
+    const handleDelete = (e: React.MouseEvent) => {
+        e.stopPropagation()
         props.handleDelete()
-        handleClose()
+        setIsOpen((prevState) => !prevState)
     }
 
     return !isOpen ? (
         <div
             className="movie-card__menu_closed"
-            onClick={() => setIsOpen(true)}
+            onClick={handleOpen}
         ></div>
     ) : (
         <div className="movie-card__menu_opened">
