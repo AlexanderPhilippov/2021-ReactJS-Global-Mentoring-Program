@@ -7,13 +7,14 @@ import { MovieModel } from 'Components/Movie/models'
 
 const MovieDetailsPanel: React.FC = () => {
     const { context, setContext } = useContext(Context)
+    const handleClick = () => setContext()
     return (
         <>
             <HeaderTextLogo />
             <img
                 className="header__search-icon"
                 src={SearchIcon}
-                onClick={() => setContext()}
+                onClick={handleClick}
             />
             <MovieDetails movie={context as MovieModel} />
         </>

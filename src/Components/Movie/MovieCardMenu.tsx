@@ -15,15 +15,13 @@ const MovieCardMenu: React.FC<MovieActions> = (props) => {
     }
 
     const handleEdit = (e: React.MouseEvent) => {
-        e.stopPropagation()
+        handleClose(e)
         props.handleEdit()
-        setIsOpen((prevState) => !prevState)
     }
 
     const handleDelete = (e: React.MouseEvent) => {
-        e.stopPropagation()
+        handleClose(e)
         props.handleDelete()
-        setIsOpen((prevState) => !prevState)
     }
 
     return !isOpen ? (
