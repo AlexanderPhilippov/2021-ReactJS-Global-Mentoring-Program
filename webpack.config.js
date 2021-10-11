@@ -23,6 +23,7 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         alias: {
             Components: path.resolve(__dirname, 'src/Components'),
+            Utils: path.resolve(__dirname, 'src/Utils'),
             Assets: path.resolve(__dirname, 'src/Assets'),
         },
     },
@@ -55,7 +56,14 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|svg|gif|ttf|woff|woff2|eot)/,
-                use: ['file-loader'],
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'images/[hash]-[name].[ext]',
+                        },
+                    },
+                ],
             },
         ],
     },

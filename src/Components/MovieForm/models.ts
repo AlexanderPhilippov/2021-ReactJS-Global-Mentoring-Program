@@ -7,6 +7,6 @@ export enum MovieFormAction {
 }
 
 export interface MovieFormProps {
-    action?: MovieFormAction,
-    movie?: MovieModel,
+    action?: MovieFormAction
+    movie?: MovieModel
 }
