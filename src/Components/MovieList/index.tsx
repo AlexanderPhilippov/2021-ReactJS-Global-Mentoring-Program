@@ -2,7 +2,6 @@ import React, { useEffect, useReducer } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Movie from 'Components/Movie'
 import {
-    MovieListFilterState,
     MovieListLocalState,
     MovieListReducerAction,
     MoviesResponseModel,
@@ -19,7 +18,7 @@ import {
     fetchMoviesError,
     fetchMoviesSuccess,
 } from './actions'
-import { AppState } from 'src/Store/rootReducer'
+import * as Selectors from './selectors'
 
 const reducer = (
     state: MovieListLocalState,
@@ -38,13 +37,11 @@ const MovieList: React.FC = () => {
     const [localState, setLocalState] = useReducer(reducer, initialState)
     const dispatch = useDispatch()
 
-    const { data, error, totalAmount } = useSelector(
-        (state: AppState) => state.movies
-    )
-
-    const { genre, sortBy, sortOrder } = useSelector(
-        (state: AppState): MovieListFilterState => state.filter
-    )
+    const movies = useSelector(Selectors.getMoviesSelector)
+    const error = useSelector(Selectors.getErrorSelector)
+    const sortBy = useSelector(Selectors.getSotrtBySelector)
+    const sortOrder = useSelector(Selectors.getSortOrderSelector)
+    const genre = useSelector(Selectors.getGenreSelector)
 
     useEffect(() => {
         dispatch(fetchMoviesBegin())
@@ -80,7 +77,7 @@ const MovieList: React.FC = () => {
         })
     }
 
-    return !error && data ? (
+    return !error && movies ? (
         <>
             <Modal isOpen={localState.isModalOpen} closeAction={handleClose}>
                 <MovieForm
@@ -90,8 +87,8 @@ const MovieList: React.FC = () => {
             </Modal>
 
             <div className="movie-list">
-                <MoviesHeader total={totalAmount} />
-                {data.map((movie) => (
+                <MoviesHeader />
+                {movies.map((movie) => (
                     <Movie
                         key={movie.id}
                         movie={movie}

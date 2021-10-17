@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import classnames from 'classnames'
-import { MovieListFilterState, MoviesHeaderProps, SortOrder } from './models'
+import { SortOrder } from './models'
 import { setMoviesGenre, setSortBy, setSortOrder } from './actions'
-import { AppState } from 'src/Store/rootReducer'
+import * as Selectors from './selectors'
 
 const GenreLink: React.FC<{
     name: string
@@ -24,11 +24,12 @@ const GenreLink: React.FC<{
         </div>
     )
 }
-const MoviesHeader: React.FC<MoviesHeaderProps> = ({ total }) => {
+const MoviesHeader: React.FC = () => {
     const genres = ['', 'documentary', 'comedy', 'horror', 'crime']
-    const { genre, sortOrder } = useSelector(
-        (state: AppState): MovieListFilterState => state.filter
-    )
+
+    const sortOrder = useSelector(Selectors.getSortOrderSelector)
+    const genre = useSelector(Selectors.getGenreSelector)
+    const totalAmount = useSelector(Selectors.getTotalAmountSelector)
 
     const dispatch = useDispatch()
 
@@ -73,7 +74,7 @@ const MoviesHeader: React.FC<MoviesHeaderProps> = ({ total }) => {
                 </select>
             </div>
             <div className="movie-list-header__total">
-                <span>{total || 0}</span>&nbsp;movies found
+                <span>{totalAmount}</span>&nbsp;movies found
             </div>
         </div>
     )

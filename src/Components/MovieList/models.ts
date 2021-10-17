@@ -9,10 +9,6 @@ export interface MoviesResponseModel {
     limit: number
 }
 
-export interface MoviesHeaderProps {
-    total?: number
-}
-
 export interface MovieListLocalState {
     isModalOpen: boolean
     selectedMovie?: MovieModel
