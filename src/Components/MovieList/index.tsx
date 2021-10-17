@@ -38,7 +38,7 @@ const MovieList: React.FC = () => {
     const [localState, setLocalState] = useReducer(reducer, initialState)
     const dispatch = useDispatch()
 
-    const { isLoading, data, error, totalAmount } = useSelector(
+    const { data, error, totalAmount } = useSelector(
         (state: AppState) => state.movies
     )
 
@@ -80,50 +80,32 @@ const MovieList: React.FC = () => {
         })
     }
 
-    return (
+    return !error && data ? (
         <>
-            {isLoading ? (
-                <div>Loading....</div>
-            ) : (
-                !error &&
-                data && (
-                    <>
-                        <Modal
-                            isOpen={localState.isModalOpen}
-                            closeAction={handleClose}
-                        >
-                            <MovieForm
-                                action={localState.currentAction}
-                                movie={localState.selectedMovie}
-                            />
-                        </Modal>
+            <Modal isOpen={localState.isModalOpen} closeAction={handleClose}>
+                <MovieForm
+                    action={localState.currentAction}
+                    movie={localState.selectedMovie}
+                />
+            </Modal>
 
-                        <div className="movie-list">
-                            <MoviesHeader total={totalAmount} />
-                            {data.map((movie) => (
-                                <Movie
-                                    key={movie.id}
-                                    movie={movie}
-                                    handleEdit={() =>
-                                        handleChange(
-                                            movie,
-                                            MovieFormAction.EDIT
-                                        )
-                                    }
-                                    handleDelete={() =>
-                                        handleChange(
-                                            movie,
-                                            MovieFormAction.DELETE
-                                        )
-                                    }
-                                />
-                            ))}
-                        </div>
-                    </>
-                )
-            )}
+            <div className="movie-list">
+                <MoviesHeader total={totalAmount} />
+                {data.map((movie) => (
+                    <Movie
+                        key={movie.id}
+                        movie={movie}
+                        handleEdit={() =>
+                            handleChange(movie, MovieFormAction.EDIT)
+                        }
+                        handleDelete={() =>
+                            handleChange(movie, MovieFormAction.DELETE)
+                        }
+                    />
+                ))}
+            </div>
         </>
-    )
+    ) : null
 }
 
 export default MovieList
