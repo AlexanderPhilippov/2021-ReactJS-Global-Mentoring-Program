@@ -1,9 +1,23 @@
 import { combineReducers } from 'redux'
-import movies from 'Components/MovieList/reducers'
-import { MovieListState } from 'Components/MovieList/models'
+import {
+    movieListReducer as movies,
+    movieListFilterReducer as filter,
+} from 'Components/MovieList/reducers'
+import {
+    MovieListFilterState,
+    MovieListState,
+} from 'Components/MovieList/models'
 
 export interface AppState {
     movies: MovieListState
+    filter: MovieListFilterState
 }
 
-export default combineReducers<AppState>({ movies })
+export interface BaseAction {
+    type: string
+    payload?: unknown
+    error?: unknown
+    meta?: unknown
+}
+
+export default combineReducers<AppState>({ movies, filter })

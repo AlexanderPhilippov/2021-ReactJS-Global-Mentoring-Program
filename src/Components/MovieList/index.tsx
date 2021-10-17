@@ -2,6 +2,7 @@ import React, { useEffect, useReducer } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Movie from 'Components/Movie'
 import {
+    MovieListFilterState,
     MovieListLocalState,
     MovieListReducerAction,
     MoviesResponseModel,
@@ -41,10 +42,14 @@ const MovieList: React.FC = () => {
         (state: AppState) => state.movies
     )
 
+    const { genre } = useSelector(
+        (state: AppState): MovieListFilterState => state.filter
+    )
+
     useEffect(() => {
         dispatch(fetchMoviesBegin())
         const response = useFetch<MoviesResponseModel>(
-            'http://127.0.0.1:4000/movies?limit=24&offset=5'
+            `movies?limit=24&offset=5&filter=${genre}`
         )
         response
             .then((data) => {
@@ -53,7 +58,7 @@ const MovieList: React.FC = () => {
             .catch((e: Error) => {
                 dispatch(fetchMoviesError(e.message))
             })
-    }, [])
+    }, [genre])
 
     const handleChange = (movie: MovieModel, type: MovieFormAction) => {
         setLocalState({

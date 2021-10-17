@@ -1,5 +1,6 @@
 import { MovieModel } from 'Components/Movie/models'
 import { MovieFormAction } from 'Components/MovieForm/models'
+import { BaseAction } from 'src/Store/rootReducer'
 
 export interface MoviesResponseModel {
     data: MovieModel[]
@@ -29,8 +30,15 @@ export interface MovieListState extends Partial<MoviesResponseModel> {
     error?: string
 }
 
-export interface MovieListAction {
-    type: string
+export interface MovieListAction extends BaseAction {
     payload?: MoviesResponseModel
     error?: string
+}
+
+export interface MovieListFilterState {
+    genre: string
+}
+
+export interface MovieListFilterAction extends BaseAction {
+    payload: MovieListFilterState
 }
