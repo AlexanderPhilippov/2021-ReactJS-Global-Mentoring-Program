@@ -27,11 +27,17 @@ const initialState: MovieListLocalState = {
 }
 
 const MovieList: React.FC = () => {
-    const [fetchedData, setFetchedData] = useState<MoviesResponseModel>()
+    const [data, setData] = useState<MoviesResponseModel>()
 
     useEffect(() => {
-        const data = useFetch<MoviesResponseModel>('url to movies api')
-        setFetchedData(data)
+        const response = useFetch<MoviesResponseModel>(
+            'http://127.0.0.1:4000/movies?limit=24&offset=5'
+        )
+        response
+            .then((data) => setData(data))
+            .catch((e) => {
+                console.log('error!!!', e)
+            })
     }, [])
 
     const [state, dispatch] = useReducer(reducer, initialState)
@@ -58,7 +64,7 @@ const MovieList: React.FC = () => {
 
     return (
         <>
-            {!fetchedData ? (
+            {!data ? (
                 <div>Loading....</div>
             ) : (
                 <>
@@ -70,8 +76,8 @@ const MovieList: React.FC = () => {
                     </Modal>
 
                     <div className="movie-list">
-                        <MoviesHeader total={fetchedData.totalAmount} />
-                        {fetchedData?.data.map((movie) => (
+                        <MoviesHeader total={data.totalAmount} />
+                        {data?.data.map((movie) => (
                             <Movie
                                 key={movie.id}
                                 movie={movie}

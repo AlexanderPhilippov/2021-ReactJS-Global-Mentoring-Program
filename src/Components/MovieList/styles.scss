@@ -12,7 +12,7 @@
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: end;
     justify-content: space-between;
 
     &__genres,
@@ -44,15 +44,6 @@
 
     &__genres {
       flex: 1 1 60%;
-
-      div {
-        margin-right: 15px;
-        text-transform: uppercase;
-      }
-
-      div:first-child {
-        border-bottom: 1px solid #f65261;
-      }
     }
 
     &__total {
@@ -63,6 +54,16 @@
 
       span {
         font-weight: bold;
+      }
+    }
+
+    &__genre-link {
+      cursor: pointer;
+      margin-right: 15px;
+      text-transform: uppercase;
+
+      &.active {
+        border-bottom: 4px solid #f65261;
       }
     }
   }
