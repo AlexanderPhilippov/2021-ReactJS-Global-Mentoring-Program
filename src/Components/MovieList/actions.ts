@@ -3,6 +3,7 @@ import {
     MovieListAction,
     MovieListFilterAction,
     MoviesResponseModel,
+    SearchBy,
     SortOrder,
 } from './models'
 
@@ -35,4 +36,14 @@ export const setSortBy = (data: string): MovieListFilterAction => ({
 export const setSortOrder = (data: SortOrder): MovieListFilterAction => ({
     type: actionTypes.SET_MOVIES_FILTER_SORT_ORDER,
     payload: { sortOrder: data },
+})
+
+export const setSearchValue = (data: string): MovieListFilterAction => ({
+    type: actionTypes.SET_MOVIES_FILTER_SEARCH,
+    payload: { search: data },
+})
+
+export const setSearchBy = (data: SearchBy): MovieListFilterAction => ({
+    type: actionTypes.SET_MOVIES_FILTER_SORT_ORDER,
+    payload: { searchBy: data },
 })

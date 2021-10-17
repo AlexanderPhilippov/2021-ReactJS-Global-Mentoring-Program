@@ -34,10 +34,18 @@ export enum SortOrder {
     ASC = 'asc',
 }
 
+export enum SearchBy {
+    GENRES = 'genres',
+    TITLE = 'title',
+    ALL = '',
+}
+
 export interface MovieListFilterState {
     genre?: string
     sortBy?: string
     sortOrder?: SortOrder
+    search?: string
+    searchBy?: SearchBy
 }
 
 export interface MovieListFilterAction extends BaseAction {

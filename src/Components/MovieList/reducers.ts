@@ -5,6 +5,7 @@ import {
     MovieListFilterState,
     MovieListFilterAction,
     SortOrder,
+    SearchBy,
 } from './models'
 
 export const movieListReducer = (
@@ -28,6 +29,8 @@ export const movieListFilterReducer = (
         genre: '',
         sortBy: 'genres',
         sortOrder: SortOrder.DESC,
+        search: '',
+        searchBy: SearchBy.TITLE,
     },
     action: MovieListFilterAction
 ): MovieListFilterState => {
@@ -38,6 +41,10 @@ export const movieListFilterReducer = (
             return { ...state, sortBy: action.payload.sortBy }
         case actionTypes.SET_MOVIES_FILTER_SORT_ORDER:
             return { ...state, sortOrder: action.payload.sortOrder }
+        case actionTypes.SET_MOVIES_FILTER_SEARCH:
+            return { ...state, search: action.payload.search }
+        case actionTypes.SET_MOVIES_FILTER_SEARCH_BY:
+            return { ...state, searchBy: action.payload.searchBy }
         default:
             return state
     }

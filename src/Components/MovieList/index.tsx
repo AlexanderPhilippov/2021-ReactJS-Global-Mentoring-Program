@@ -41,11 +41,15 @@ const MovieList: React.FC = () => {
     const sortBy = useSelector(Selectors.getSotrtBySelector)
     const sortOrder = useSelector(Selectors.getSortOrderSelector)
     const genre = useSelector(Selectors.getGenreSelector)
+    const search = useSelector(Selectors.getSearchSelector)
+    const searchBy = useSelector(Selectors.getSearchBySelector)
 
     useEffect(() => {
         const params: Record<string, string> = {
             sortBy,
             sortOrder,
+            search,
+            searchBy,
             filter: genre,
             limit: '12',
         }
@@ -57,7 +61,7 @@ const MovieList: React.FC = () => {
             .catch((e: Error) => {
                 dispatch(fetchMoviesError(e.message))
             })
-    }, [genre, sortBy, sortOrder])
+    }, [genre, sortBy, sortOrder, search, searchBy])
 
     const handleChange = (movie: MovieModel, type: MovieFormAction) => {
         setLocalState({
