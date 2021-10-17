@@ -21,8 +21,6 @@ export interface MovieListReducerAction {
 
 export interface MovieListState extends Partial<MoviesResponseModel> {
     isLoading: boolean
-    selectedGenre?: string
-    sortBy?: string
     error?: string
 }
 

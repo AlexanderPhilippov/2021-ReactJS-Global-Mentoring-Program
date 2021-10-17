@@ -38,17 +38,19 @@ const MovieList: React.FC = () => {
     const dispatch = useDispatch()
 
     const movies = useSelector(Selectors.getMoviesSelector)
-    const error = useSelector(Selectors.getErrorSelector)
     const sortBy = useSelector(Selectors.getSotrtBySelector)
     const sortOrder = useSelector(Selectors.getSortOrderSelector)
     const genre = useSelector(Selectors.getGenreSelector)
 
     useEffect(() => {
+        const params: Record<string, string> = {
+            sortBy,
+            sortOrder,
+            filter: genre,
+            limit: '12',
+        }
         dispatch(fetchMoviesBegin())
-        const response = useFetch<MoviesResponseModel>(
-            `movies?sortBy=${sortBy}&sortOrder=${sortOrder}&filter=${genre}&limit=12`
-        )
-        response
+        useFetch<MoviesResponseModel>('movies', params)
             .then((data) => {
                 dispatch(fetchMoviesSuccess(data))
             })
@@ -77,7 +79,7 @@ const MovieList: React.FC = () => {
         })
     }
 
-    return !error && movies ? (
+    return (
         <>
             <Modal isOpen={localState.isModalOpen} closeAction={handleClose}>
                 <MovieForm
@@ -102,7 +104,7 @@ const MovieList: React.FC = () => {
                 ))}
             </div>
         </>
-    ) : null
+    )
 }
 
 export default MovieList

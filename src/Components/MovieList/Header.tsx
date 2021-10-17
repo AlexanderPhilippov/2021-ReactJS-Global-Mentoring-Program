@@ -25,7 +25,15 @@ const GenreLink: React.FC<{
     )
 }
 const MoviesHeader: React.FC = () => {
-    const genres = ['', 'documentary', 'comedy', 'horror', 'crime']
+    const genres = [
+        '',
+        'documentary',
+        'comedy',
+        'horror',
+        'crime',
+        'Drama',
+        'Animation',
+    ]
 
     const sortOrder = useSelector(Selectors.getSortOrderSelector)
     const genre = useSelector(Selectors.getGenreSelector)
