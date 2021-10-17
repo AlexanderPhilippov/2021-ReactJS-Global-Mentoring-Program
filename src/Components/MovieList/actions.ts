@@ -3,6 +3,7 @@ import {
     MovieListAction,
     MovieListFilterAction,
     MoviesResponseModel,
+    SortOrder,
 } from './models'
 
 export const fetchMoviesBegin = (): MovieListAction => ({
@@ -24,4 +25,14 @@ export const fetchMoviesError = (data: string): MovieListAction => ({
 export const setMoviesGenre = (data: string): MovieListFilterAction => ({
     type: actionTypes.SET_MOVIES_FILTER_GENRE,
     payload: { genre: data },
+})
+
+export const setSortBy = (data: string): MovieListFilterAction => ({
+    type: actionTypes.SET_MOVIES_FILTER_SORT_BY,
+    payload: { sortBy: data },
+})
+
+export const setSortOrder = (data: SortOrder): MovieListFilterAction => ({
+    type: actionTypes.SET_MOVIES_FILTER_SORT_ORDER,
+    payload: { sortOrder: data },
 })

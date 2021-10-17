@@ -35,8 +35,15 @@ export interface MovieListAction extends BaseAction {
     error?: string
 }
 
+export enum SortOrder {
+    DESC = 'desc',
+    ASC = 'asc',
+}
+
 export interface MovieListFilterState {
-    genre: string
+    genre?: string
+    sortBy?: string
+    sortOrder?: SortOrder
 }
 
 export interface MovieListFilterAction extends BaseAction {

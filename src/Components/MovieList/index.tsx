@@ -42,14 +42,14 @@ const MovieList: React.FC = () => {
         (state: AppState) => state.movies
     )
 
-    const { genre } = useSelector(
+    const { genre, sortBy, sortOrder } = useSelector(
         (state: AppState): MovieListFilterState => state.filter
     )
 
     useEffect(() => {
         dispatch(fetchMoviesBegin())
         const response = useFetch<MoviesResponseModel>(
-            `movies?limit=24&offset=5&filter=${genre}`
+            `movies?sortBy=${sortBy}&sortOrder=${sortOrder}&filter=${genre}&limit=12`
         )
         response
             .then((data) => {
@@ -58,7 +58,7 @@ const MovieList: React.FC = () => {
             .catch((e: Error) => {
                 dispatch(fetchMoviesError(e.message))
             })
-    }, [genre])
+    }, [genre, sortBy, sortOrder])
 
     const handleChange = (movie: MovieModel, type: MovieFormAction) => {
         setLocalState({
