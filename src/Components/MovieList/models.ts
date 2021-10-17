@@ -9,7 +9,7 @@ export interface MoviesResponseModel {
 }
 
 export interface MoviesHeaderProps {
-    total: number
+    total?: number
 }
 
 export interface MovieListLocalState {
@@ -20,4 +20,17 @@ export interface MovieListLocalState {
 
 export interface MovieListReducerAction {
     payload: MovieListLocalState
+}
+
+export interface MovieListState extends Partial<MoviesResponseModel> {
+    isLoading: boolean
+    selectedGenre?: string
+    sortBy?: string
+    error?: string
+}
+
+export interface MovieListAction {
+    type: string
+    payload?: MoviesResponseModel
+    error?: string
 }

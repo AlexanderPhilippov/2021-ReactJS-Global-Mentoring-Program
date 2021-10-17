@@ -1,4 +1,5 @@
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Movie from 'Components/Movie'
 import {
     MovieListLocalState,
@@ -12,6 +13,12 @@ import { MovieFormAction } from 'Components/MovieForm/models'
 import './styles.scss'
 import { MovieModel } from 'Components/Movie/models'
 import { useFetch } from 'Utils'
+import {
+    fetchMoviesBegin,
+    fetchMoviesError,
+    fetchMoviesSuccess,
+} from './actions'
+import { AppState } from 'src/Store/rootReducer'
 
 const reducer = (
     state: MovieListLocalState,
@@ -27,23 +34,29 @@ const initialState: MovieListLocalState = {
 }
 
 const MovieList: React.FC = () => {
-    const [data, setData] = useState<MoviesResponseModel>()
+    const [localState, setLocalState] = useReducer(reducer, initialState)
+    const dispatch = useDispatch()
+
+    const { isLoading, data, error, totalAmount } = useSelector(
+        (state: AppState) => state.movies
+    )
 
     useEffect(() => {
+        dispatch(fetchMoviesBegin())
         const response = useFetch<MoviesResponseModel>(
             'http://127.0.0.1:4000/movies?limit=24&offset=5'
         )
         response
-            .then((data) => setData(data))
-            .catch((e) => {
-                console.log('error!!!', e)
+            .then((data) => {
+                dispatch(fetchMoviesSuccess(data))
+            })
+            .catch((e: Error) => {
+                dispatch(fetchMoviesError(e.message))
             })
     }, [])
 
-    const [state, dispatch] = useReducer(reducer, initialState)
-
     const handleChange = (movie: MovieModel, type: MovieFormAction) => {
-        dispatch({
+        setLocalState({
             payload: {
                 selectedMovie: movie,
                 currentAction: type,
@@ -53,7 +66,7 @@ const MovieList: React.FC = () => {
     }
 
     const handleClose = () => {
-        dispatch({
+        setLocalState({
             payload: {
                 selectedMovie: undefined,
                 currentAction: undefined,
@@ -64,33 +77,45 @@ const MovieList: React.FC = () => {
 
     return (
         <>
-            {!data ? (
+            {isLoading ? (
                 <div>Loading....</div>
             ) : (
-                <>
-                    <Modal isOpen={state.isModalOpen} closeAction={handleClose}>
-                        <MovieForm
-                            action={state.currentAction}
-                            movie={state.selectedMovie}
-                        />
-                    </Modal>
-
-                    <div className="movie-list">
-                        <MoviesHeader total={data.totalAmount} />
-                        {data?.data.map((movie) => (
-                            <Movie
-                                key={movie.id}
-                                movie={movie}
-                                handleEdit={() =>
-                                    handleChange(movie, MovieFormAction.EDIT)
-                                }
-                                handleDelete={() =>
-                                    handleChange(movie, MovieFormAction.DELETE)
-                                }
+                !error &&
+                data && (
+                    <>
+                        <Modal
+                            isOpen={localState.isModalOpen}
+                            closeAction={handleClose}
+                        >
+                            <MovieForm
+                                action={localState.currentAction}
+                                movie={localState.selectedMovie}
                             />
-                        ))}
-                    </div>
-                </>
+                        </Modal>
+
+                        <div className="movie-list">
+                            <MoviesHeader total={totalAmount} />
+                            {data.map((movie) => (
+                                <Movie
+                                    key={movie.id}
+                                    movie={movie}
+                                    handleEdit={() =>
+                                        handleChange(
+                                            movie,
+                                            MovieFormAction.EDIT
+                                        )
+                                    }
+                                    handleDelete={() =>
+                                        handleChange(
+                                            movie,
+                                            MovieFormAction.DELETE
+                                        )
+                                    }
+                                />
+                            ))}
+                        </div>
+                    </>
+                )
             )}
         </>
     )
