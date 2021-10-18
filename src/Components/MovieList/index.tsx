@@ -1,4 +1,5 @@
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Movie from 'Components/Movie'
 import {
     MovieListLocalState,
@@ -12,6 +13,12 @@ import { MovieFormAction } from 'Components/MovieForm/models'
 import './styles.scss'
 import { MovieModel } from 'Components/Movie/models'
 import { useFetch } from 'Utils'
+import {
+    fetchMoviesBegin,
+    fetchMoviesError,
+    fetchMoviesSuccess,
+} from './actions'
+import * as Selectors from './selectors'
 
 const reducer = (
     state: MovieListLocalState,
@@ -27,17 +34,39 @@ const initialState: MovieListLocalState = {
 }
 
 const MovieList: React.FC = () => {
-    const [fetchedData, setFetchedData] = useState<MoviesResponseModel>()
+    const [localState, setLocalState] = useReducer(reducer, initialState)
+    const dispatch = useDispatch()
+
+    const movies = useSelector(Selectors.getMoviesSelector)
+    const sortBy = useSelector(Selectors.getSotrtBySelector)
+    const sortOrder = useSelector(Selectors.getSortOrderSelector)
+    const genre = useSelector(Selectors.getGenreSelector)
+    const search = useSelector(Selectors.getSearchSelector)
+    const searchBy = useSelector(Selectors.getSearchBySelector)
 
     useEffect(() => {
-        const data = useFetch<MoviesResponseModel>('url to movies api')
-        setFetchedData(data)
-    }, [])
-
-    const [state, dispatch] = useReducer(reducer, initialState)
+        const defaultLimit = '12'
+        const apiRoute = 'movies'
+        const params: Record<string, string> = {
+            sortBy,
+            sortOrder,
+            search,
+            searchBy,
+            filter: genre,
+            limit: defaultLimit,
+        }
+        dispatch(fetchMoviesBegin())
+        useFetch<MoviesResponseModel>(apiRoute, params)
+            .then((data) => {
+                dispatch(fetchMoviesSuccess(data))
+            })
+            .catch((e: Error) => {
+                dispatch(fetchMoviesError(e.message))
+            })
+    }, [genre, sortBy, sortOrder, search, searchBy])
 
     const handleChange = (movie: MovieModel, type: MovieFormAction) => {
-        dispatch({
+        setLocalState({
             payload: {
                 selectedMovie: movie,
                 currentAction: type,
@@ -47,7 +76,7 @@ const MovieList: React.FC = () => {
     }
 
     const handleClose = () => {
-        dispatch({
+        setLocalState({
             payload: {
                 selectedMovie: undefined,
                 currentAction: undefined,
@@ -58,34 +87,28 @@ const MovieList: React.FC = () => {
 
     return (
         <>
-            {!fetchedData ? (
-                <div>Loading....</div>
-            ) : (
-                <>
-                    <Modal isOpen={state.isModalOpen} closeAction={handleClose}>
-                        <MovieForm
-                            action={state.currentAction}
-                            movie={state.selectedMovie}
-                        />
-                    </Modal>
+            <Modal isOpen={localState.isModalOpen} closeAction={handleClose}>
+                <MovieForm
+                    action={localState.currentAction}
+                    movie={localState.selectedMovie}
+                />
+            </Modal>
 
-                    <div className="movie-list">
-                        <MoviesHeader total={fetchedData.totalAmount} />
-                        {fetchedData?.data.map((movie) => (
-                            <Movie
-                                key={movie.id}
-                                movie={movie}
-                                handleEdit={() =>
-                                    handleChange(movie, MovieFormAction.EDIT)
-                                }
-                                handleDelete={() =>
-                                    handleChange(movie, MovieFormAction.DELETE)
-                                }
-                            />
-                        ))}
-                    </div>
-                </>
-            )}
+            <div className="movie-list">
+                <MoviesHeader />
+                {movies.map((movie) => (
+                    <Movie
+                        key={movie.id}
+                        movie={movie}
+                        handleEdit={() =>
+                            handleChange(movie, MovieFormAction.EDIT)
+                        }
+                        handleDelete={() =>
+                            handleChange(movie, MovieFormAction.DELETE)
+                        }
+                    />
+                ))}
+            </div>
         </>
     )
 }

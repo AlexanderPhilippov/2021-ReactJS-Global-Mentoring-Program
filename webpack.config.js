@@ -22,9 +22,9 @@ module.exports = {
         modules: [path.join(__dirname, 'src'), 'node_modules'],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         alias: {
+            Assets: path.resolve(__dirname, 'src/Assets'),
             Components: path.resolve(__dirname, 'src/Components'),
             Utils: path.resolve(__dirname, 'src/Utils'),
-            Assets: path.resolve(__dirname, 'src/Assets'),
         },
     },
     module: {

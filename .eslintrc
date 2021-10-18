@@ -31,7 +31,7 @@
     
     "plugins": ["react", "@typescript-eslint/eslint-plugin", "import", "prettier"],
     "rules": {
-        "indent": ["error", 4],
+        "indent": "off",
         "@typescript-eslint/indent": "off",
         "prettier/prettier": "error",
         "linebreak-style": ["error", "windows"],
