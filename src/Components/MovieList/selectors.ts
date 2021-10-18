@@ -1,3 +1,4 @@
+import { MovieModel } from 'Components/Movie/models'
 import { createSelector } from 'reselect'
 import { AppState } from 'src/Store/rootReducer'
 import { SearchBy, SortOrder } from './models'
@@ -14,6 +15,12 @@ export const getMoviesSelector = createSelector(
     moviesState,
     (movies) => movies?.data || []
 )
+
+export const getMovieByIdSelector = (state: AppState, id: number): MovieModel =>
+    createSelector(
+        getMoviesSelector,
+        (movies) => movies.find((movie) => movie.id === id) as MovieModel
+    )(state)
 
 export const getErrorSelector = createSelector(
     moviesState,

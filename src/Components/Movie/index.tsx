@@ -7,7 +7,7 @@ import './styles.scss'
 const Movie: React.FC<MovieProps> = ({ movie, handleEdit, handleDelete }) => {
     const { setContext } = useContext(Context)
     const handleClick = () => {
-        setContext(movie)
+        setContext(movie.id)
         window.scrollTo({ top: 0, behavior: 'smooth' })
     }
     return (
