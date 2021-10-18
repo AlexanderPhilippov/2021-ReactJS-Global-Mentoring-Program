@@ -6,7 +6,10 @@ import { Context } from 'Components/Context'
 
 const MovieDetailsPanel: React.FC = () => {
     const { context, setContext } = useContext(Context)
-    const handleClick = () => setContext()
+    const handleClick = () => {
+        window.scrollTo({ top: context?.pageYOffset, behavior: 'smooth' })
+        setContext()
+    }
     return (
         <>
             <HeaderTextLogo />
@@ -15,7 +18,7 @@ const MovieDetailsPanel: React.FC = () => {
                 src={SearchIcon}
                 onClick={handleClick}
             />
-            <MovieDetails movieId={context as number} />
+            <MovieDetails movieId={context?.movieId as number} />
         </>
     )
 }

@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { ErrorBoundary, Footer, Header, MovieList } from 'Components'
-import { Context } from 'Components/Context'
+import { Context, movieContextModel } from 'Components/Context'
 import { Provider } from 'react-redux'
 import store from './Store'
 
 const App: React.FC = () => {
-    const [context, setContext] = useState<number>()
+    const [context, setContext] = useState<movieContextModel>()
     return (
         <>
             <Provider store={store}>
                 <Context.Provider value={{ context, setContext }}>
-                    <Header isSearch={!context} />
+                    <Header isSearch={!context?.movieId} />
                     <ErrorBoundary>
                         <MovieList />
                     </ErrorBoundary>
