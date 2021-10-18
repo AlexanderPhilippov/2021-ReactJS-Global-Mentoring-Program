@@ -6,7 +6,6 @@ export interface movieContextModel {
 }
 interface MoviesContext {
     context?: movieContextModel
-    pageYOffset?: number
     setContext: (context?: movieContextModel) => void
 }
 
