@@ -22,12 +22,12 @@ export const getErrorSelector = createSelector(
 
 export const getGenreSelector = createSelector(
     filterState,
-    (filter) => filter.genre || ''
+    (filter) => filter.genre || SearchBy.ALL
 )
 
 export const getSotrtBySelector = createSelector(
     filterState,
-    (filter) => filter.sortBy || 'genres'
+    (filter) => filter.sortBy || SearchBy.GENRES
 )
 
 export const getSortOrderSelector = createSelector(

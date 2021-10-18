@@ -26,8 +26,8 @@ export const movieListReducer = (
 
 export const movieListFilterReducer = (
     state: MovieListFilterState = {
-        genre: '',
-        sortBy: 'genres',
+        genre: SearchBy.ALL,
+        sortBy: SearchBy.GENRES,
         sortOrder: SortOrder.DESC,
         search: '',
         searchBy: SearchBy.TITLE,

@@ -45,16 +45,18 @@ const MovieList: React.FC = () => {
     const searchBy = useSelector(Selectors.getSearchBySelector)
 
     useEffect(() => {
+        const defaultLimit = '12'
+        const apiRoute = 'movies'
         const params: Record<string, string> = {
             sortBy,
             sortOrder,
             search,
             searchBy,
             filter: genre,
-            limit: '12',
+            limit: defaultLimit,
         }
         dispatch(fetchMoviesBegin())
-        useFetch<MoviesResponseModel>('movies', params)
+        useFetch<MoviesResponseModel>(apiRoute, params)
             .then((data) => {
                 dispatch(fetchMoviesSuccess(data))
             })

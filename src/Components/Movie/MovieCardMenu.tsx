@@ -3,7 +3,8 @@ import { MovieActions } from './models'
 
 const MovieCardMenu: React.FC<MovieActions> = (props) => {
     const [isOpen, setIsOpen] = useState(false)
-    const ref = useRef<NodeJS.Timeout | null>()
+    const timeOutId = useRef<number | null>(null)
+    const timeOutValue = 400
 
     const handleOpen = () => {
         setIsOpen(true)
@@ -25,13 +26,14 @@ const MovieCardMenu: React.FC<MovieActions> = (props) => {
     }
 
     const handleCloseWithDelay = () => {
-        ref.current = setTimeout(() => {
+        timeOutId.current = window.setTimeout(() => {
             setIsOpen(false)
-            ref.current = null
-        }, 400)
+            timeOutId.current = null
+        }, timeOutValue) as unknown as number
     }
 
-    const handleStopClose = () => ref.current && clearTimeout(ref.current)
+    const handleStopClose = () =>
+        timeOutId.current && window.clearTimeout(timeOutId.current)
 
     return !isOpen ? (
         <div

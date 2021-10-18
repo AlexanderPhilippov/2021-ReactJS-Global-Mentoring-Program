@@ -27,10 +27,10 @@ const GenreLink: React.FC<{
 const MoviesHeader: React.FC = () => {
     const genres = [
         '',
-        'documentary',
-        'comedy',
-        'horror',
-        'crime',
+        'Documentary',
+        'Comedy',
+        'Horror',
+        'Crime',
         'Drama',
         'Animation',
     ]
