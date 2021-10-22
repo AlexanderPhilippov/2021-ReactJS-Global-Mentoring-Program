@@ -23,6 +23,13 @@ export interface MovieModel extends MovieBaseModel {
     id: number
 }
 
+export interface FormikMovieModel
+    extends Omit<Partial<MovieModel>, 'genres' | 'runtime' | 'vote_average'> {
+    runtime: string
+    genres: string
+    vote_average: string
+}
+
 export interface MovieActions {
     handleEdit: () => void
     handleDelete: () => void
