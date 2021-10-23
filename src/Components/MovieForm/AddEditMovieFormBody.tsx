@@ -1,114 +1,93 @@
 import React from 'react'
 import classNames from 'classnames'
 import { useFormikContext, Field } from 'formik'
-import { FormikMovieModel } from './models'
+import { FormBlockProps, FormikMovieModel } from './models'
 
+const FormBlock: React.FC<FormBlockProps> = (props) => {
+    return (
+        <div className={props.containerClassName}>
+            <label>
+                {props.label}{' '}
+                {props.touched && props.errorText && `- ${props.errorText}`}
+            </label>
+            <Field
+                type={props.type}
+                placeholder={props.placeholder}
+                name={props.name}
+                className={classNames({
+                    hasError: props.touched && props.errorText,
+                })}
+                component={props.component}
+            />
+        </div>
+    )
+}
 const AddEditMovieFormBody: React.FC = () => {
+    const leftColumnStyles = 'movie-form__left-column'
+    const rightColumnStyles = 'movie-form__right-column'
+    const descriptionStyles = 'movie-form__description'
+
     const { touched, errors, isSubmitting } =
         useFormikContext<FormikMovieModel>()
 
     return (
         <>
-            <div className="movie-form__left-column">
-                <label>
-                    title
-                    {touched.title && errors.title && `- ${errors.title}`}
-                </label>
-                <Field
-                    placeholder="Movie title"
-                    name="title"
-                    className={classNames({
-                        hasError: touched.title && errors.title,
-                    })}
-                />
-            </div>
-            <div className="movie-form__right-column">
-                <label>
-                    release date
-                    {touched.release_date &&
-                        errors.release_date &&
-                        `- ${errors.release_date}`}
-                </label>
-                <Field
-                    type="date"
-                    placeholder="Select date"
-                    name="release_date"
-                    className={classNames({
-                        hasError: touched.release_date && errors.release_date,
-                    })}
-                />
-            </div>
-            <div className="movie-form__left-column">
-                <label>
-                    movie url
-                    {touched.poster_path &&
-                        errors.poster_path &&
-                        `- ${errors.poster_path}`}
-                </label>
-                <Field
-                    placeholder="https://"
-                    name="poster_path"
-                    className={classNames({
-                        hasError: touched.poster_path && errors.poster_path,
-                    })}
-                />
-            </div>
-            <div className="movie-form__right-column">
-                <label>
-                    rating
-                    {touched.vote_average &&
-                        errors.vote_average &&
-                        `- ${errors.vote_average}`}
-                </label>
-                <Field
-                    name="vote_average"
-                    className={classNames({
-                        hasError: touched.vote_average && errors.vote_average,
-                    })}
-                />
-            </div>
-            <div className="movie-form__left-column">
-                <label>
-                    genres
-                    {touched.genres && errors.genres && `- ${errors.genres}`}
-                </label>
-                <Field
-                    placeholder="Select genre"
-                    name="genres"
-                    className={classNames({
-                        hasError: touched.genres && errors.genres,
-                    })}
-                />
-            </div>
-            <div className="movie-form__right-column">
-                <label>
-                    runtime
-                    {touched.runtime && errors.runtime && `- ${errors.runtime}`}
-                </label>
-                <Field
-                    placeholder="minutes"
-                    name="runtime"
-                    className={classNames({
-                        hasError: touched.runtime && errors.runtime,
-                    })}
-                />
-            </div>
-            <div className="movie-form__description">
-                <label>
-                    overview
-                    {touched.overview &&
-                        errors.overview &&
-                        `- ${errors.overview}`}
-                </label>
-                <Field
-                    component="textarea"
-                    placeholder="Movie description"
-                    name="overview"
-                    className={classNames({
-                        hasError: touched.overview && errors.overview,
-                    })}
-                />
-            </div>
+            <FormBlock
+                touched={touched.title}
+                errorText={errors.title}
+                containerClassName={leftColumnStyles}
+                name="title"
+                label="title"
+                placeholder="Movie title"
+            />
+            <FormBlock
+                touched={touched.release_date}
+                errorText={errors.release_date}
+                containerClassName={rightColumnStyles}
+                name="release_date"
+                label="release date"
+                type="date"
+            />
+            <FormBlock
+                touched={touched.poster_path}
+                errorText={errors.poster_path}
+                containerClassName={leftColumnStyles}
+                name="poster_path"
+                label="movie url"
+                placeholder="https://"
+            />
+            <FormBlock
+                touched={touched.vote_average}
+                errorText={errors.vote_average}
+                containerClassName={rightColumnStyles}
+                name="vote_average"
+                label="rating"
+            />
+            <FormBlock
+                touched={touched.genres}
+                errorText={errors.genres}
+                containerClassName={leftColumnStyles}
+                name="genres"
+                label="genres"
+                placeholder="Select genre"
+            />
+            <FormBlock
+                touched={touched.runtime}
+                errorText={errors.runtime}
+                containerClassName={rightColumnStyles}
+                name="runtime"
+                label="runtime"
+                placeholder="minutes"
+            />
+            <FormBlock
+                touched={touched.overview}
+                errorText={errors.overview}
+                containerClassName={descriptionStyles}
+                name="overview"
+                label="overview"
+                placeholder="Movie description"
+                component="textarea"
+            />
             <div className="movie-form__buttons">
                 <input type="submit" value="submit" disabled={isSubmitting} />
                 <input type="reset" value="reset" disabled={isSubmitting} />

@@ -17,3 +17,14 @@ export interface FormikMovieModel
     genres: string
     vote_average: string
 }
+
+export interface FormBlockProps {
+    touched?: boolean
+    errorText?: string
+    containerClassName: string
+    name: string
+    type?: string
+    label: string
+    placeholder?: string
+    component?: string
+}
