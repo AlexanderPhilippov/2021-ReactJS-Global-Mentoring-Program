@@ -8,7 +8,7 @@ export default (values: FormikMovieModel): FormikErrors<FormikMovieModel> => {
     const invalidDate = 'Invalid date'
 
     const errors: FormikErrors<FormikMovieModel> = {}
-    if (!/^(.){5,100}$/.test(values?.title || '')) {
+    if (!/^(.){1,100}$/.test(values?.title || '')) {
         errors.title = requireErrorMessage
     }
     if (!/^\d{4}-\d{2}-\d{2}$/.test(values?.release_date || '')) {
@@ -23,7 +23,9 @@ export default (values: FormikMovieModel): FormikErrors<FormikMovieModel> => {
     if (!/^\d{1,3}$/.test(values?.runtime)) {
         errors.runtime = invalidTime
     }
-    if (!/^\w{1,}([,]\w{1,})+?$|^\w{1,}$/.test(values?.genres)) {
+    if (
+        !/^(\w|\s){1,}?([,](\w|\s){1,})+?$|^(\w|\s){1,}$/.test(values?.genres)
+    ) {
         errors.genres = requireErrorMessage
     }
     if (!/^(.){5,}$/.test(values?.overview || '')) {

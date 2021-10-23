@@ -6,11 +6,6 @@ export enum MovieFormAction {
     DELETE = 'Delete movie',
 }
 
-export interface MovieFormProps {
-    action?: MovieFormAction
-    movie?: MovieModel
-}
-
 export interface FormikMovieModel
     extends Omit<Partial<MovieModel>, 'genres' | 'runtime' | 'vote_average'> {
     runtime: string

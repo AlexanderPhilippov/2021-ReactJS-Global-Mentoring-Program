@@ -4,18 +4,16 @@ import { MovieProps } from './models'
 import MovieCardMenu from './MovieCardMenu'
 import './styles.scss'
 
-const Movie: React.FC<MovieProps> = ({ movie, handleEdit, handleDelete }) => {
+const Movie: React.FC<MovieProps> = ({ movie }) => {
     const { setContext } = useContext(Context)
     const handleClick = () => {
         setContext({ movieId: movie.id, pageYOffset: window.scrollY })
         window.scrollTo({ top: 0, behavior: 'smooth' })
     }
+
     return (
         <div className="movie-card" onClick={handleClick}>
-            <MovieCardMenu
-                handleEdit={handleEdit}
-                handleDelete={handleDelete}
-            />
+            <MovieCardMenu movieId={movie.id} />
             <div className="movie-card__image">
                 <img src={movie.poster_path} alt={`${movie.title} poster`} />
             </div>

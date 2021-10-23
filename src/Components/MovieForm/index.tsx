@@ -2,11 +2,24 @@ import React from 'react'
 import { Form, Formik } from 'formik'
 import AddEditMovieFormBody from './AddEditMovieFormBody'
 import DeleteMovieFormBody from './DeleteMovieFormBody'
-import { FormikMovieModel, MovieFormAction, MovieFormProps } from './models'
+import { FormikMovieModel, MovieFormAction } from './models'
 import validationRules from './validationRules'
 import './styles.scss'
+import { useSelector } from 'react-redux'
+import {
+    getCurrentModalFormAction,
+    getSelectedMovieIdForm,
+} from 'Components/Modal/selectors'
+import { AppState } from 'src/Store/rootReducer'
+import { getMovieByIdSelector } from 'Components/MovieList/selectors'
 
-const MovieForm: React.FC<MovieFormProps> = ({ action, movie }) => {
+const MovieForm: React.FC = () => {
+    const movieId = useSelector(getSelectedMovieIdForm)
+    const action = useSelector(getCurrentModalFormAction)
+    const movie = useSelector((state: AppState) =>
+        getMovieByIdSelector(state, movieId)
+    )
+
     const initialValues: FormikMovieModel = {
         id: movie?.id,
         title: movie?.title || '',
@@ -17,7 +30,6 @@ const MovieForm: React.FC<MovieFormProps> = ({ action, movie }) => {
         runtime: movie?.runtime?.toString() || '',
         overview: movie?.overview || '',
     }
-
     const handleSubmit = (values: FormikMovieModel) => {
         console.log('Submit', values)
     }
@@ -27,6 +39,7 @@ const MovieForm: React.FC<MovieFormProps> = ({ action, movie }) => {
             initialValues={initialValues}
             validate={validationRules}
             onSubmit={handleSubmit}
+            enableReinitialize
         >
             <Form>
                 <div className="movie-form__container">
