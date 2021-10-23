@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { ChangeEventHandler } from 'react'
+import React from 'react'
 import classNames from 'classnames'
-import { FormikErrors, FormikTouched, useFormikContext, Field } from 'formik'
-import { FormikMovieModel, MovieModel } from 'Components/Movie/models'
+import { useFormikContext, Field } from 'formik'
+import { FormikMovieModel } from './models'
 
 const AddEditMovieFormBody: React.FC = () => {
-    const { touched, errors, isSubmitting, values } =
+    const { touched, errors, isSubmitting } =
         useFormikContext<FormikMovieModel>()
 
     return (

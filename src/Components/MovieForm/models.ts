@@ -10,3 +10,10 @@ export interface MovieFormProps {
     action?: MovieFormAction
     movie?: MovieModel
 }
+
+export interface FormikMovieModel
+    extends Omit<Partial<MovieModel>, 'genres' | 'runtime' | 'vote_average'> {
+    runtime: string
+    genres: string
+    vote_average: string
+}
