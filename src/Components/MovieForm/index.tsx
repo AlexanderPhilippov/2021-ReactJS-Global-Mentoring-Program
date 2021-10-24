@@ -12,6 +12,8 @@ import {
 } from 'Components/Modal/selectors'
 import { AppState } from 'src/Store/rootReducer'
 import { getMovieByIdSelector } from 'Components/MovieList/selectors'
+import { MoviesRoute, useCreateUrl, useFetch } from 'Utils'
+import { MovieModel } from 'Components/Movie/models'
 
 const MovieForm: React.FC = () => {
     const movieId = useSelector(getSelectedMovieIdForm)
@@ -31,7 +33,68 @@ const MovieForm: React.FC = () => {
         overview: movie?.overview || '',
     }
     const handleSubmit = (values: FormikMovieModel) => {
-        console.log('Submit', values)
+        switch (action) {
+            case MovieFormAction.ADD:
+                useFetch<MovieModel>(useCreateUrl(MoviesRoute), {
+                    method: 'POST',
+                    cache: 'no-cache',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        title: values.title,
+                        release_date: values.release_date,
+                        poster_path: values.poster_path,
+                        vote_average: Number(values.vote_average),
+                        genres: values.genres.split(','),
+                        runtime: Number(values.runtime),
+                        overview: values.overview,
+                    }),
+                })
+                    .then(() => {
+                        console.log('Movie Added')
+                    })
+                    .catch((e: Error) => {
+                        console.log('Something went wrong:', e.message)
+                    })
+                break
+            case MovieFormAction.EDIT:
+                useFetch<MovieModel>(useCreateUrl(MoviesRoute), {
+                    method: 'PUT',
+                    cache: 'no-cache',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: Number(values.id),
+                        title: values.title,
+                        release_date: values.release_date,
+                        poster_path: values.poster_path,
+                        vote_average: Number(values.vote_average),
+                        genres: values.genres.split(','),
+                        runtime: Number(values.runtime),
+                        overview: values.overview,
+                    }),
+                })
+                    .then(() => {
+                        console.log('Edit success')
+                    })
+                    .catch((e: Error) => {
+                        console.log('Something went wrong:', e.message)
+                    })
+                break
+            case MovieFormAction.DELETE:
+                useFetch<null>(useCreateUrl(`${MoviesRoute}/${values.id}`), {
+                    method: 'DELETE',
+                })
+                    .then(() => {
+                        console.log('DELETE success')
+                    })
+                    .catch((e: Error) => {
+                        console.log('Something went wrong:', e.message)
+                    })
+                break
+        }
     }
 
     return (

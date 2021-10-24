@@ -20,7 +20,7 @@ export default (values: FormikMovieModel): FormikErrors<FormikMovieModel> => {
     if (!/^[0-9]{1,1}([.][0-9]{1,1})?$|^10$/.test(values?.vote_average)) {
         errors.vote_average = invalidNumberMinMax
     }
-    if (!/^\d{1,3}$/.test(values?.runtime)) {
+    if (!/^\d{1,3}$/.test(values.runtime)) {
         errors.runtime = invalidTime
     }
     if (
@@ -28,7 +28,7 @@ export default (values: FormikMovieModel): FormikErrors<FormikMovieModel> => {
     ) {
         errors.genres = requireErrorMessage
     }
-    if (!/^(.){5,}$/.test(values?.overview || '')) {
+    if (!/^(.|\n){5,}$/.test(values?.overview || '')) {
         errors.overview = requireErrorMessage
     }
     return errors

@@ -1,14 +1,5 @@
-async function useFetch<T>(
-    url: string,
-    params?: Record<string, string>
-): Promise<T> {
-    const baseApiUrl = 'http://127.0.0.1:4000/'
-    const requstUrl = new URL(`${baseApiUrl}${url}`)
-    Object.keys(params || {}).forEach((key) => {
-        const value = params?.[key] as string
-        value && requstUrl.searchParams.append(key, value)
-    })
-    const response = await fetch(requstUrl.toString())
+async function useFetch<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
+    const response = await fetch(input, init)
     return await response.json()
 }
 

@@ -6,7 +6,7 @@ import { MoviesHeader } from './Header'
 import { Modal } from 'Components'
 import MovieForm from 'Components/MovieForm'
 import './styles.scss'
-import { useFetch } from 'Utils'
+import { useFetch, useCreateUrl, MoviesRoute } from 'Utils'
 import {
     fetchMoviesBegin,
     fetchMoviesError,
@@ -26,7 +26,6 @@ const MovieList: React.FC = () => {
 
     useEffect(() => {
         const defaultLimit = '12'
-        const apiRoute = 'movies'
         const params: Record<string, string> = {
             sortBy,
             sortOrder,
@@ -36,7 +35,8 @@ const MovieList: React.FC = () => {
             limit: defaultLimit,
         }
         dispatch(fetchMoviesBegin())
-        useFetch<MoviesResponseModel>(apiRoute, params)
+        const url = useCreateUrl(MoviesRoute, params)
+        useFetch<MoviesResponseModel>(url)
             .then((data) => {
                 dispatch(fetchMoviesSuccess(data))
             })

@@ -1,3 +1,4 @@
 import useFetch from './useFetch'
+import { useCreateUrl, MoviesRoute } from './urlUtil'
 
-export { useFetch }
+export { useFetch, useCreateUrl, MoviesRoute }
