@@ -23,6 +23,7 @@ const MovieList: React.FC = () => {
     const genre = useSelector(Selectors.getGenreSelector)
     const search = useSelector(Selectors.getSearchSelector)
     const searchBy = useSelector(Selectors.getSearchBySelector)
+    const refreshRequred = useSelector(Selectors.getRefreshRequiredValue)
 
     useEffect(() => {
         const defaultLimit = '12'
@@ -43,7 +44,7 @@ const MovieList: React.FC = () => {
             .catch((e: Error) => {
                 dispatch(fetchMoviesError(e.message))
             })
-    }, [genre, sortBy, sortOrder, search, searchBy])
+    }, [genre, sortBy, sortOrder, search, searchBy, refreshRequred])
 
     return (
         <>

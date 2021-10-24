@@ -35,6 +35,7 @@ export interface MovieListFilterState {
     sortOrder?: SortOrder
     search?: string
     searchBy?: SearchBy
+    refreshRequired?: string
 }
 
 export interface MovieListFilterAction extends BaseAction {

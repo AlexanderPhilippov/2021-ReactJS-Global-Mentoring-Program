@@ -3,9 +3,9 @@ import { Form, Formik } from 'formik'
 import AddEditMovieFormBody from './AddEditMovieFormBody'
 import DeleteMovieFormBody from './DeleteMovieFormBody'
 import { FormikMovieModel, MovieFormAction } from './models'
-import validationRules from './validationRules'
+import validationRules, { noValidate } from './validationRules'
 import './styles.scss'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import {
     getCurrentModalFormAction,
     getSelectedMovieIdForm,
@@ -14,13 +14,19 @@ import { AppState } from 'src/Store/rootReducer'
 import { getMovieByIdSelector } from 'Components/MovieList/selectors'
 import { MoviesRoute, useCreateUrl, useFetch } from 'Utils'
 import { MovieModel } from 'Components/Movie/models'
+import { closeModal } from 'Components/Modal/actions'
+import { setRefreshRequired } from 'Components/MovieList/actions'
 
 const MovieForm: React.FC = () => {
+    const dispatch = useDispatch()
     const movieId = useSelector(getSelectedMovieIdForm)
     const action = useSelector(getCurrentModalFormAction)
     const movie = useSelector((state: AppState) =>
         getMovieByIdSelector(state, movieId)
     )
+
+    const validate =
+        action === MovieFormAction.DELETE ? noValidate : validationRules
 
     const initialValues: FormikMovieModel = {
         id: movie?.id,
@@ -32,67 +38,66 @@ const MovieForm: React.FC = () => {
         runtime: movie?.runtime?.toString() || '',
         overview: movie?.overview || '',
     }
+
+    const valuesToBody = (values: FormikMovieModel, isIdRequired = true) => {
+        const data = {
+            title: values.title,
+            release_date: values.release_date,
+            poster_path: values.poster_path,
+            vote_average: Number(values.vote_average),
+            genres: values.genres.split(','),
+            runtime: Number(values.runtime),
+            overview: values.overview,
+        }
+        return JSON.stringify(
+            isIdRequired ? { ...data, id: Number(values.id) } : data
+        )
+    }
     const handleSubmit = (values: FormikMovieModel) => {
+        const cache = 'no-cache'
+        const headers = {
+            'Content-Type': 'application/json',
+        }
         switch (action) {
             case MovieFormAction.ADD:
                 useFetch<MovieModel>(useCreateUrl(MoviesRoute), {
                     method: 'POST',
-                    cache: 'no-cache',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        title: values.title,
-                        release_date: values.release_date,
-                        poster_path: values.poster_path,
-                        vote_average: Number(values.vote_average),
-                        genres: values.genres.split(','),
-                        runtime: Number(values.runtime),
-                        overview: values.overview,
-                    }),
+                    cache,
+                    headers,
+                    body: valuesToBody(values, false),
+                }).then((movie) => {
+                    dispatch(closeModal())
+                    dispatch(setRefreshRequired(`new movie added ${movie.id}`))
                 })
-                    .then(() => {
-                        console.log('Movie Added')
-                    })
-                    .catch((e: Error) => {
-                        console.log('Something went wrong:', e.message)
-                    })
                 break
             case MovieFormAction.EDIT:
                 useFetch<MovieModel>(useCreateUrl(MoviesRoute), {
                     method: 'PUT',
-                    cache: 'no-cache',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        id: Number(values.id),
-                        title: values.title,
-                        release_date: values.release_date,
-                        poster_path: values.poster_path,
-                        vote_average: Number(values.vote_average),
-                        genres: values.genres.split(','),
-                        runtime: Number(values.runtime),
-                        overview: values.overview,
-                    }),
+                    cache,
+                    headers,
+                    body: valuesToBody(values),
+                }).then(() => {
+                    dispatch(closeModal())
+                    dispatch(
+                        setRefreshRequired(
+                            `movie with id ${
+                                values.id
+                            } was edited. sequence number: ${Math.random().toString()}`
+                        )
+                    )
                 })
-                    .then(() => {
-                        console.log('Edit success')
-                    })
-                    .catch((e: Error) => {
-                        console.log('Something went wrong:', e.message)
-                    })
                 break
             case MovieFormAction.DELETE:
-                useFetch<null>(useCreateUrl(`${MoviesRoute}/${values.id}`), {
+                useFetch(useCreateUrl(`${MoviesRoute}/${values.id}`), {
                     method: 'DELETE',
+                }).then(() => {
+                    dispatch(closeModal())
+                    dispatch(
+                        setRefreshRequired(
+                            `movie with id ${values.id} successfuly removed`
+                        )
+                    )
                 })
-                    .then(() => {
-                        console.log('DELETE success')
-                    })
-                    .catch((e: Error) => {
-                        console.log('Something went wrong:', e.message)
-                    })
                 break
         }
     }
@@ -100,7 +105,7 @@ const MovieForm: React.FC = () => {
     return (
         <Formik
             initialValues={initialValues}
-            validate={validationRules}
+            validate={validate}
             onSubmit={handleSubmit}
             enableReinitialize
         >

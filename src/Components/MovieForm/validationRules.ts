@@ -33,3 +33,8 @@ export default (values: FormikMovieModel): FormikErrors<FormikMovieModel> => {
     }
     return errors
 }
+
+export const noValidate = (): FormikErrors<FormikMovieModel> => {
+    const errors: FormikErrors<FormikMovieModel> = {}
+    return errors
+}
