@@ -1,8 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import HeaderTextLogo from './HeaderTextLogo'
 import MovieDetails from 'Components/MovieDetails'
 import SearchIcon from 'Assets/Images/search.png'
 import { Context } from 'Components/Context'
+import { useSelector } from 'react-redux'
+import { AppState } from 'src/Store/rootReducer'
+import { getMovieByIdSelector } from 'Components/MovieList/selectors'
 
 const MovieDetailsPanel: React.FC = () => {
     const { context, setContext } = useContext(Context)
@@ -10,6 +13,15 @@ const MovieDetailsPanel: React.FC = () => {
         window.scrollTo({ top: context?.pageYOffset, behavior: 'smooth' })
         setContext()
     }
+
+    const movie = useSelector((state: AppState) =>
+        getMovieByIdSelector(state, context?.movieId)
+    )
+
+    useEffect(() => {
+        if (!movie) setContext()
+    }, [movie])
+
     return (
         <>
             <HeaderTextLogo />
@@ -18,7 +30,7 @@ const MovieDetailsPanel: React.FC = () => {
                 src={SearchIcon}
                 onClick={handleClick}
             />
-            <MovieDetails movieId={context?.movieId as number} />
+            {movie && <MovieDetails {...movie} />}
         </>
     )
 }
