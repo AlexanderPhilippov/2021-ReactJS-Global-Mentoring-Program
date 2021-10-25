@@ -4,18 +4,18 @@ import { useFormikContext, Field } from 'formik'
 import { FormBlockProps, FormikMovieModel } from './models'
 
 const FormBlock: React.FC<FormBlockProps> = (props) => {
+    const hasError = props.touched && props.errorText
     return (
         <div className={props.containerClassName}>
             <label>
-                {props.label}{' '}
-                {props.touched && props.errorText && `- ${props.errorText}`}
+                {props.label} {hasError && `- ${props.errorText}`}
             </label>
             <Field
                 type={props.type}
                 placeholder={props.placeholder}
                 name={props.name}
                 className={classNames({
-                    hasError: props.touched && props.errorText,
+                    hasError,
                 })}
                 component={props.component}
             />

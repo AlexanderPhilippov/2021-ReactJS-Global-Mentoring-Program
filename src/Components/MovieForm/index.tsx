@@ -65,10 +65,15 @@ const MovieForm: React.FC = () => {
                     cache,
                     headers,
                     body: valuesToBody(values, false),
-                }).then((movie) => {
-                    dispatch(closeModal())
-                    dispatch(setRefreshRequired(`new movie added ${movie.id}`))
                 })
+                    .then((movie) => {
+                        dispatch(
+                            setRefreshRequired(`new movie added ${movie.id}`)
+                        )
+                    })
+                    .finally(() => {
+                        dispatch(closeModal())
+                    })
                 break
             case MovieFormAction.EDIT:
                 useFetch<MovieModel>(useCreateUrl(MoviesRoute), {
@@ -76,28 +81,34 @@ const MovieForm: React.FC = () => {
                     cache,
                     headers,
                     body: valuesToBody(values),
-                }).then(() => {
-                    dispatch(closeModal())
-                    dispatch(
-                        setRefreshRequired(
-                            `movie with id ${
-                                values.id
-                            } was edited. sequence number: ${Math.random().toString()}`
-                        )
-                    )
                 })
+                    .then(() => {
+                        dispatch(
+                            setRefreshRequired(
+                                `movie with id ${
+                                    values.id
+                                } was edited. sequence number: ${Math.random().toString()}`
+                            )
+                        )
+                    })
+                    .finally(() => {
+                        dispatch(closeModal())
+                    })
                 break
             case MovieFormAction.DELETE:
                 useFetch(useCreateUrl(`${MoviesRoute}/${values.id}`), {
                     method: 'DELETE',
-                }).then(() => {
-                    dispatch(closeModal())
-                    dispatch(
-                        setRefreshRequired(
-                            `movie with id ${values.id} successfuly removed`
-                        )
-                    )
                 })
+                    .then(() => {
+                        dispatch(
+                            setRefreshRequired(
+                                `movie with id ${values.id} successfuly removed`
+                            )
+                        )
+                    })
+                    .finally(() => {
+                        dispatch(closeModal())
+                    })
                 break
         }
     }
