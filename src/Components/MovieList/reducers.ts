@@ -45,6 +45,8 @@ export const movieListFilterReducer = (
             return { ...state, search: action.payload.search }
         case actionTypes.SET_MOVIES_FILTER_SEARCH_BY:
             return { ...state, searchBy: action.payload.searchBy }
+        case actionTypes.SET_MOVIES_FILTER_REFRESH_REQUIRED:
+            return { ...state, refreshRequired: action.payload.refreshRequired }
         default:
             return state
     }

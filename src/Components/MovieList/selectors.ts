@@ -16,7 +16,10 @@ export const getMoviesSelector = createSelector(
     (movies) => movies?.data || []
 )
 
-export const getMovieByIdSelector = (state: AppState, id: number): MovieModel =>
+export const getMovieByIdSelector = (
+    state: AppState,
+    id?: number
+): MovieModel =>
     createSelector(
         getMoviesSelector,
         (movies) => movies.find((movie) => movie.id === id) as MovieModel
@@ -50,4 +53,9 @@ export const getSearchSelector = createSelector(
 export const getSearchBySelector = createSelector(
     filterState,
     (filter) => filter.searchBy || SearchBy.ALL
+)
+
+export const getRefreshRequiredValue = createSelector(
+    filterState,
+    (filter) => filter.refreshRequired || ''
 )

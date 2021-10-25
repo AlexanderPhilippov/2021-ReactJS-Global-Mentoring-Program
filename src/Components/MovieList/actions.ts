@@ -47,3 +47,8 @@ export const setSearchBy = (data: SearchBy): MovieListFilterAction => ({
     type: actionTypes.SET_MOVIES_FILTER_SORT_ORDER,
     payload: { searchBy: data },
 })
+
+export const setRefreshRequired = (data: string): MovieListFilterAction => ({
+    type: actionTypes.SET_MOVIES_FILTER_REFRESH_REQUIRED,
+    payload: { refreshRequired: data },
+})

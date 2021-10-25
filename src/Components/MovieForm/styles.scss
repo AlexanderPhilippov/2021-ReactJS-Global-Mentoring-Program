@@ -5,6 +5,10 @@
 
   &__message {
     font-size: 22px;
+    &_movie-title{
+      color: crimson;
+      font-size: larger;
+    }
   }
 
   &__buttons {
@@ -62,6 +66,10 @@
       border: none;
       color: white;
       font-size: 18px;
+
+      &.hasError {
+        border: 1px solid red;
+      }
     }
 
     textarea {
@@ -75,6 +83,9 @@
       box-sizing: border-box;
       color: white;
       font-size: 18px;
+      &.hasError {
+        border: 1px solid red;
+      }
     }
   }
 

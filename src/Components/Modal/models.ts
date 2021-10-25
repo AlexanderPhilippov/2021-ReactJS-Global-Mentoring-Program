@@ -1,4 +1,12 @@
-export interface ModalProps {
+import { MovieFormAction } from 'Components/MovieForm/models'
+import { BaseAction } from 'src/Store/rootReducer'
+
+export interface MovieModalState {
+    formAction?: MovieFormAction
+    movieId?: number
     isOpen: boolean
-    closeAction: () => void
+}
+
+export interface MovieModalActions extends BaseAction {
+    payload?: number
 }

@@ -23,11 +23,6 @@ export interface MovieModel extends MovieBaseModel {
     id: number
 }
 
-export interface MovieActions {
-    handleEdit: () => void
-    handleDelete: () => void
-}
-
-export interface MovieProps extends MovieActions {
+export interface MovieProps {
     movie: MovieModel
 }

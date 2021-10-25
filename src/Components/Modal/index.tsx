@@ -1,11 +1,21 @@
 import React, { useEffect } from 'react'
-import { ModalProps } from './models'
+import { useDispatch, useSelector } from 'react-redux'
+import { closeModal } from './actions'
+import { isModalOpen } from './selectors'
 import './styles.scss'
 
-const Modal: React.FC<ModalProps> = ({ isOpen, closeAction, children }) => {
+const Modal: React.FC = ({ children }) => {
+    const isOpen = useSelector(isModalOpen)
+
     useEffect(() => {
         document.body.style.overflow = isOpen ? 'hidden' : 'unset'
     }, [isOpen])
+
+    const dispatch = useDispatch()
+
+    const handleClose = () => {
+        dispatch(closeModal())
+    }
 
     return isOpen ? (
         <div className="modal">
@@ -13,7 +23,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeAction, children }) => {
                 type="button"
                 value="X"
                 className="modal__close"
-                onClick={closeAction}
+                onClick={handleClose}
             />
             {children}
         </div>

@@ -1,10 +1,16 @@
+import {
+    openEditMovieModal,
+    openDeleteMovieModal,
+} from 'Components/Modal/actions'
 import React, { useRef, useState } from 'react'
-import { MovieActions } from './models'
+import { useDispatch } from 'react-redux'
 
-const MovieCardMenu: React.FC<MovieActions> = (props) => {
+const MovieCardMenu: React.FC<{ movieId: number }> = ({ movieId }) => {
     const [isOpen, setIsOpen] = useState(false)
     const timeOutId = useRef<number | null>(null)
     const timeOutValue = 400
+
+    const dispatch = useDispatch()
 
     const handleOpen = () => {
         setIsOpen(true)
@@ -17,12 +23,12 @@ const MovieCardMenu: React.FC<MovieActions> = (props) => {
 
     const handleEdit = (e: React.MouseEvent) => {
         handleClose(e)
-        props.handleEdit()
+        dispatch(openEditMovieModal(movieId))
     }
 
     const handleDelete = (e: React.MouseEvent) => {
         handleClose(e)
-        props.handleDelete()
+        dispatch(openDeleteMovieModal(movieId))
     }
 
     const handleCloseWithDelay = () => {

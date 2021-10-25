@@ -1,5 +1,4 @@
 import { MovieModel } from 'Components/Movie/models'
-import { MovieFormAction } from 'Components/MovieForm/models'
 import { BaseAction } from 'src/Store/rootReducer'
 
 export interface MoviesResponseModel {
@@ -7,16 +6,6 @@ export interface MoviesResponseModel {
     totalAmount: number
     offset: number
     limit: number
-}
-
-export interface MovieListLocalState {
-    isModalOpen: boolean
-    selectedMovie?: MovieModel
-    currentAction?: MovieFormAction
-}
-
-export interface MovieListReducerAction {
-    payload: MovieListLocalState
 }
 
 export interface MovieListState extends Partial<MoviesResponseModel> {
@@ -46,6 +35,7 @@ export interface MovieListFilterState {
     sortOrder?: SortOrder
     search?: string
     searchBy?: SearchBy
+    refreshRequired?: string
 }
 
 export interface MovieListFilterAction extends BaseAction {
