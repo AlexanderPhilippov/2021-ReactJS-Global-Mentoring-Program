@@ -1,0 +1,29 @@
+.page-not-found {
+    color: white;
+    min-height: 93vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    &__header {
+        font-size: 5em;
+    }
+
+    &__text {
+        font-size: 3em;
+        margin-bottom: 25px;
+    }
+
+    &__link,
+    &__link:active {
+        font-size: 20px;
+        color: #f65261;
+        text-decoration: none;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    &__link:hover {
+        color: #db3442;
+    }
+}

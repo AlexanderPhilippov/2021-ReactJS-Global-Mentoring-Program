@@ -17,6 +17,7 @@ module.exports = {
     output: {
         filename: isProd ? '[name].[fullhash].js' : '[name].js',
         path: path.join(__dirname, 'dist'),
+        publicPath: '/',
     },
     resolve: {
         modules: [path.join(__dirname, 'src'), 'node_modules'],
@@ -94,5 +95,6 @@ module.exports = {
     },
     devServer: {
         port: 3000,
+        historyApiFallback: true,
     },
 }
