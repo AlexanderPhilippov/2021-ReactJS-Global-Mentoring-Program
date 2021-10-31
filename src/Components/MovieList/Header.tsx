@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useHistory } from 'react-router-dom'
 import classnames from 'classnames'
 import { SortOrder } from './models'
-import { setMoviesGenre, setSortBy } from './actions'
+import { setMoviesGenre } from './actions'
 import * as Selectors from './selectors'
 
 const GenreLink: React.FC<{
@@ -39,13 +39,20 @@ const MoviesHeader: React.FC = () => {
     const history = useHistory()
     const searchParams = new URLSearchParams(location.search)
     const sortOrder = searchParams.get('sortOrder') || 'desc'
+    const sortBy = searchParams.get('sortBy') || 'genres'
     const genre = searchParams.get('genre') || ''
     const totalAmount = useSelector(Selectors.getTotalAmountSelector)
 
-    const dispatch = useDispatch()
+    const pushToHistory = () => {
+        history.push({
+            pathname: location.pathname,
+            search: searchParams.toString(),
+        })
+    }
 
     const handleChange = (e: React.FormEvent<HTMLSelectElement>) => {
-        dispatch(setSortBy(e.currentTarget.value))
+        searchParams.set('sortBy', e.currentTarget.value)
+        pushToHistory()
     }
 
     const handleChangeSortOrder = () => {
@@ -53,11 +60,15 @@ const MoviesHeader: React.FC = () => {
             'sortOrder',
             sortOrder === SortOrder.DESC ? SortOrder.ASC : SortOrder.DESC
         )
-        history.push({
-            pathname: location.pathname,
-            search: `?${searchParams.toString()}`,
-        })
+        pushToHistory()
     }
+
+    const By = {
+        genre: 'genres',
+        vote: 'vote_average',
+        release: 'release_date',
+    }
+
     return (
         <div className="movie-list-header">
             <div className="movie-list-header__genres">
@@ -82,9 +93,15 @@ const MoviesHeader: React.FC = () => {
                     </span>
                 </div>
                 <select onChange={handleChange}>
-                    <option value="genres">genre</option>
-                    <option value="vote_average">rating</option>
-                    <option value="release_date">release date</option>
+                    <option value={By.genre} selected={sortBy === By.genre}>
+                        genre
+                    </option>
+                    <option value={By.vote} selected={sortBy === By.vote}>
+                        rating
+                    </option>
+                    <option value={By.release} selected={sortBy === By.release}>
+                        release date
+                    </option>
                 </select>
             </div>
             <div className="movie-list-header__total">
