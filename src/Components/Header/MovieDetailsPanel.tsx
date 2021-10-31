@@ -13,12 +13,16 @@ const MovieDetailsPanel: React.FC = () => {
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
     const { context, setContext } = useContext(Context)
-    const handleClick = () => {
+
+    const clearMovieFromQuery = () => {
         searchParams.delete('movie')
         history.push({
             pathname: location.pathname,
             search: searchParams.toString(),
         })
+    }
+    const handleClick = () => {
+        clearMovieFromQuery()
         window.scrollTo({ top: context?.pageYOffset, behavior: 'smooth' })
         setContext()
     }
@@ -28,7 +32,10 @@ const MovieDetailsPanel: React.FC = () => {
     )
 
     useEffect(() => {
-        if (!movie) setContext()
+        if (!movie) {
+            clearMovieFromQuery()
+            setContext()
+        }
     }, [movie])
 
     return (

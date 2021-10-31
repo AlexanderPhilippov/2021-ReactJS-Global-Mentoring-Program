@@ -28,7 +28,7 @@ const App: React.FC = () => {
                         </Route>
                         <Route path="/search/:genre?/:searchQuery?">
                             <Context.Provider value={{ context, setContext }}>
-                                <Header isSearch={!context?.movieId} />
+                                <Header />
                                 <ErrorBoundary>
                                     <MovieList />
                                 </ErrorBoundary>
