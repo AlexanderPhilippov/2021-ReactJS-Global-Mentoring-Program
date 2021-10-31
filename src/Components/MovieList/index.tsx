@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import Movie from 'Components/Movie'
 import { MoviesResponseModel } from './models'
 import { MoviesHeader } from './Header'
@@ -16,24 +18,29 @@ import * as Selectors from './selectors'
 
 const MovieList: React.FC = () => {
     const dispatch = useDispatch()
+    const location = useLocation()
+    const searchParams = new URLSearchParams(location.search)
+
+    const sortBy = searchParams.get('sortBy') || 'genres'
+    const sortOrder = searchParams.get('sortOrder') || 'desc'
+    const genre = searchParams.get('genre') || ''
+    const search = searchParams.get('search') || ''
+    const searchBy = searchParams.get('searchBy') || 'title'
+    const limit = searchParams.get('limit') || '12'
+    const offset = searchParams.get('offset') || ''
 
     const movies = useSelector(Selectors.getMoviesSelector)
-    const sortBy = useSelector(Selectors.getSotrtBySelector)
-    const sortOrder = useSelector(Selectors.getSortOrderSelector)
-    const genre = useSelector(Selectors.getGenreSelector)
-    const search = useSelector(Selectors.getSearchSelector)
-    const searchBy = useSelector(Selectors.getSearchBySelector)
-    const refreshRequred = useSelector(Selectors.getRefreshRequiredValue)
+    const refreshRequred = useSelector(Selectors.getRefreshRequiredFlagSelector)
 
     useEffect(() => {
-        const defaultLimit = '12'
         const params: Record<string, string> = {
             sortBy,
             sortOrder,
             search,
             searchBy,
             filter: genre,
-            limit: defaultLimit,
+            limit,
+            offset,
         }
         dispatch(fetchMoviesBegin())
         const url = useCreateUrl(MoviesRoute, params)
@@ -44,7 +51,7 @@ const MovieList: React.FC = () => {
             .catch((e: Error) => {
                 dispatch(fetchMoviesError(e.message))
             })
-    }, [genre, sortBy, sortOrder, search, searchBy, refreshRequred])
+    }, [genre, sortBy, sortOrder, search, searchBy, offset, refreshRequred])
 
     return (
         <>

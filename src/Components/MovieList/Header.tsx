@@ -1,8 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useHistory } from 'react-router-dom'
 import classnames from 'classnames'
 import { SortOrder } from './models'
-import { setMoviesGenre, setSortBy, setSortOrder } from './actions'
+import { setMoviesGenre, setSortBy } from './actions'
 import * as Selectors from './selectors'
 
 const GenreLink: React.FC<{
@@ -34,9 +35,11 @@ const MoviesHeader: React.FC = () => {
         'Drama',
         'Animation',
     ]
-
-    const sortOrder = useSelector(Selectors.getSortOrderSelector)
-    const genre = useSelector(Selectors.getGenreSelector)
+    const location = useLocation()
+    const history = useHistory()
+    const searchParams = new URLSearchParams(location.search)
+    const sortOrder = searchParams.get('sortOrder') || 'desc'
+    const genre = searchParams.get('genre') || ''
     const totalAmount = useSelector(Selectors.getTotalAmountSelector)
 
     const dispatch = useDispatch()
@@ -46,11 +49,14 @@ const MoviesHeader: React.FC = () => {
     }
 
     const handleChangeSortOrder = () => {
-        dispatch(
-            setSortOrder(
-                sortOrder === SortOrder.DESC ? SortOrder.ASC : SortOrder.DESC
-            )
+        searchParams.set(
+            'sortOrder',
+            sortOrder === SortOrder.DESC ? SortOrder.ASC : SortOrder.DESC
         )
+        history.push({
+            pathname: location.pathname,
+            search: `?${searchParams.toString()}`,
+        })
     }
     return (
         <div className="movie-list-header">

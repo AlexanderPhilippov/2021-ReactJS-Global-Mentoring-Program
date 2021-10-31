@@ -55,7 +55,7 @@ export const getSearchBySelector = createSelector(
     (filter) => filter.searchBy || SearchBy.ALL
 )
 
-export const getRefreshRequiredValue = createSelector(
+export const getRefreshRequiredFlagSelector = createSelector(
     filterState,
     (filter) => filter.refreshRequired || ''
 )
