@@ -6,7 +6,7 @@ import * as Selectors from './selectors'
 
 const MoviesHeader: React.FC = () => {
     const genres = [
-        '',
+        'All',
         'Documentary',
         'Comedy',
         'Horror',
@@ -24,7 +24,8 @@ const MoviesHeader: React.FC = () => {
     const searchParams = new URLSearchParams(location.search)
     const sortOrder = searchParams.get('sortOrder') || SortOrder.DESC
     const sortBy = searchParams.get('sortBy') || By.genre
-    const { genre } = useParams<{ genre: string }>() || ''
+    const { genre, searchQuery } =
+        useParams<{ genre: string; searchQuery: string }>()
     const totalAmount = useSelector(Selectors.getTotalAmountSelector)
 
     const pushToHistory = () => {
@@ -50,17 +51,17 @@ const MoviesHeader: React.FC = () => {
     return (
         <div className="movie-list-header">
             <div className="movie-list-header__genres">
-                {genres.map((genreName, index) => {
+                {genres.map((genreName) => {
                     return (
                         <NavLink
                             key={genreName}
-                            to={`/search/${genreName}?${searchParams.toString()}`}
+                            to={`/search/${genreName}/${
+                                searchQuery || ''
+                            }?${searchParams.toString()}`}
                             className="movie-list-header__genre-link"
-                            isActive={() =>
-                                genreName === genre || (!genre && index == 0)
-                            }
+                            isActive={() => genreName === (genre || 'All')}
                         >
-                            {genreName || 'All'}
+                            {genreName}
                         </NavLink>
                     )
                 })}

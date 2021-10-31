@@ -23,8 +23,8 @@ const MovieList: React.FC = () => {
 
     const sortBy = searchParams.get('sortBy') || 'genres'
     const sortOrder = searchParams.get('sortOrder') || 'desc'
-    const { genre } = useParams<{ genre: string }>() || ''
-    const search = searchParams.get('search') || ''
+    const { genre, searchQuery } =
+        useParams<{ genre: string; searchQuery: string }>()
     const searchBy = searchParams.get('searchBy') || 'title'
     const limit = searchParams.get('limit') || '12'
     const offset = searchParams.get('offset') || ''
@@ -36,9 +36,9 @@ const MovieList: React.FC = () => {
         const params: Record<string, string> = {
             sortBy,
             sortOrder,
-            search,
+            search: searchQuery,
             searchBy,
-            filter: genre,
+            filter: genre === 'All' ? '' : genre,
             limit,
             offset,
         }
@@ -51,7 +51,15 @@ const MovieList: React.FC = () => {
             .catch((e: Error) => {
                 dispatch(fetchMoviesError(e.message))
             })
-    }, [genre, sortBy, sortOrder, search, searchBy, offset, refreshRequred])
+    }, [
+        genre,
+        sortBy,
+        sortOrder,
+        searchQuery,
+        searchBy,
+        offset,
+        refreshRequred,
+    ])
 
     return (
         <>
