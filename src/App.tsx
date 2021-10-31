@@ -26,7 +26,7 @@ const App: React.FC = () => {
                         <Route path="/" exact>
                             <Redirect to="/search" />
                         </Route>
-                        <Route path="/search/:movieId?">
+                        <Route path="/search/:genre?">
                             <Context.Provider value={{ context, setContext }}>
                                 <Header isSearch={!context?.movieId} />
                                 <ErrorBoundary>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import Movie from 'Components/Movie'
 import { MoviesResponseModel } from './models'
 import { MoviesHeader } from './Header'
@@ -23,7 +23,7 @@ const MovieList: React.FC = () => {
 
     const sortBy = searchParams.get('sortBy') || 'genres'
     const sortOrder = searchParams.get('sortOrder') || 'desc'
-    const genre = searchParams.get('genre') || ''
+    const { genre } = useParams<{ genre: string }>() || ''
     const search = searchParams.get('search') || ''
     const searchBy = searchParams.get('searchBy') || 'title'
     const limit = searchParams.get('limit') || '12'
