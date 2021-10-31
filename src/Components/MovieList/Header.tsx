@@ -1,30 +1,9 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useHistory } from 'react-router-dom'
-import classnames from 'classnames'
+import { useSelector } from 'react-redux'
+import { useLocation, useHistory, NavLink } from 'react-router-dom'
 import { SortOrder } from './models'
-import { setMoviesGenre } from './actions'
 import * as Selectors from './selectors'
 
-const GenreLink: React.FC<{
-    name: string
-    isSelected?: boolean
-}> = ({ name, isSelected }) => {
-    const dispatch = useDispatch()
-    const handleClick = () => {
-        dispatch(setMoviesGenre(name))
-    }
-    return (
-        <div
-            className={classnames('movie-list-header__genre-link', {
-                active: isSelected,
-            })}
-            onClick={handleClick}
-        >
-            {name || 'all'}
-        </div>
-    )
-}
 const MoviesHeader: React.FC = () => {
     const genres = [
         '',
@@ -74,11 +53,14 @@ const MoviesHeader: React.FC = () => {
             <div className="movie-list-header__genres">
                 {genres.map((genreName) => {
                     return (
-                        <GenreLink
+                        <NavLink
                             key={genreName}
-                            name={genreName}
-                            isSelected={genreName === genre}
-                        />
+                            to={`${genreName && `?genre=${genreName}`}`}
+                            className="movie-list-header__genre-link"
+                            isActive={() => genreName === genre}
+                        >
+                            {genreName || 'All'}
+                        </NavLink>
                     )
                 })}
             </div>
