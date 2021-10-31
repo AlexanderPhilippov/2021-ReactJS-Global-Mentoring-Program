@@ -1,12 +1,23 @@
 import { Context } from 'Components/Context'
 import React, { useContext } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 import { MovieProps } from './models'
 import MovieCardMenu from './MovieCardMenu'
 import './styles.scss'
 
 const Movie: React.FC<MovieProps> = ({ movie }) => {
     const { setContext } = useContext(Context)
+
+    const history = useHistory()
+    const location = useLocation()
+    const searchParams = new URLSearchParams(location.search)
+
     const handleClick = () => {
+        searchParams.set('movie', movie.id.toString())
+        history.push({
+            pathname: location.pathname,
+            search: searchParams.toString(),
+        })
         setContext({ movieId: movie.id, pageYOffset: window.scrollY })
         window.scrollTo({ top: 0, behavior: 'smooth' })
     }
