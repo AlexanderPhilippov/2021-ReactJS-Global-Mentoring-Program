@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router-dom'
 import Movie from 'Components/Movie'
-import { MoviesResponseModel } from './models'
+import { MoviesResponseModel, SearchBy, SortBy, SortOrder } from './models'
 import { MoviesHeader } from './Header'
 import { Modal } from 'Components'
 import MovieForm from 'Components/MovieForm'
@@ -20,13 +20,14 @@ const MovieList: React.FC = () => {
     const dispatch = useDispatch()
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
+    const defaultLimit = '12'
 
-    const sortBy = searchParams.get('sortBy') || 'genres'
-    const sortOrder = searchParams.get('sortOrder') || 'desc'
+    const sortBy = searchParams.get('sortBy') || SortBy.GENRE
+    const sortOrder = searchParams.get('sortOrder') || SortOrder.DESC
     const { genre, searchQuery } =
         useParams<{ genre: string; searchQuery: string }>()
-    const searchBy = searchParams.get('searchBy') || 'title'
-    const limit = searchParams.get('limit') || '12'
+    const searchBy = searchParams.get('searchBy') || SearchBy.TITLE
+    const limit = searchParams.get('limit') || defaultLimit
     const offset = searchParams.get('offset') || ''
 
     const movies = useSelector(Selectors.getMoviesSelector)

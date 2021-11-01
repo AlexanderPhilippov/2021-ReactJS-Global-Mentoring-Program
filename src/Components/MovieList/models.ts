@@ -23,6 +23,12 @@ export enum SortOrder {
     ASC = 'asc',
 }
 
+export enum SortBy {
+    GENRE = 'genres',
+    VOTE = 'vote_average',
+    RELEASE = 'release_date',
+}
+
 export enum SearchBy {
     GENRES = 'genres',
     TITLE = 'title',

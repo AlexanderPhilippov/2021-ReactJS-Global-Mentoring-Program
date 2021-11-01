@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useHistory, NavLink, useParams } from 'react-router-dom'
-import { SortOrder } from './models'
+import { SortBy, SortOrder } from './models'
 import * as Selectors from './selectors'
 
 const MoviesHeader: React.FC = () => {
@@ -14,16 +14,11 @@ const MoviesHeader: React.FC = () => {
         'Drama',
         'Animation',
     ]
-    const By = {
-        genre: 'genres',
-        vote: 'vote_average',
-        release: 'release_date',
-    }
     const location = useLocation()
     const history = useHistory()
     const searchParams = new URLSearchParams(location.search)
     const sortOrder = searchParams.get('sortOrder') || SortOrder.DESC
-    const sortBy = searchParams.get('sortBy') || By.genre
+    const sortBy = searchParams.get('sortBy') || SortBy.GENRE
     const { genre, searchQuery } =
         useParams<{ genre: string; searchQuery: string }>()
     const totalAmount = useSelector(Selectors.getTotalAmountSelector)
@@ -77,9 +72,9 @@ const MoviesHeader: React.FC = () => {
                     </span>
                 </div>
                 <select onChange={handleChange} defaultValue={sortBy}>
-                    <option value={By.genre}>genre</option>
-                    <option value={By.vote}>rating</option>
-                    <option value={By.release}>release date</option>
+                    <option value={SortBy.GENRE}>genre</option>
+                    <option value={SortBy.VOTE}>rating</option>
+                    <option value={SortBy.RELEASE}>release date</option>
                 </select>
             </div>
             <div className="movie-list-header__total">

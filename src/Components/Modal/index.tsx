@@ -9,6 +9,7 @@ const Modal: React.FC = ({ children }) => {
 
     useEffect(() => {
         document.body.style.overflow = isOpen ? 'hidden' : 'unset'
+        document.body.style.paddingRight = isOpen ? '17px' : 'unset'
     }, [isOpen])
 
     const dispatch = useDispatch()
