@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useParams } from 'react-router-dom'
 import Movie from 'Components/Movie'
-import { MoviesResponseModel } from './models'
+import { MoviesResponseModel, SearchBy, SortBy, SortOrder } from './models'
 import { MoviesHeader } from './Header'
 import { Modal } from 'Components'
 import MovieForm from 'Components/MovieForm'
@@ -16,24 +18,30 @@ import * as Selectors from './selectors'
 
 const MovieList: React.FC = () => {
     const dispatch = useDispatch()
+    const location = useLocation()
+    const searchParams = new URLSearchParams(location.search)
+    const defaultLimit = '12'
+
+    const sortBy = searchParams.get('sortBy') || SortBy.GENRE
+    const sortOrder = searchParams.get('sortOrder') || SortOrder.DESC
+    const { genre, searchQuery } =
+        useParams<{ genre: string; searchQuery: string }>()
+    const searchBy = searchParams.get('searchBy') || SearchBy.TITLE
+    const limit = searchParams.get('limit') || defaultLimit
+    const offset = searchParams.get('offset') || ''
 
     const movies = useSelector(Selectors.getMoviesSelector)
-    const sortBy = useSelector(Selectors.getSotrtBySelector)
-    const sortOrder = useSelector(Selectors.getSortOrderSelector)
-    const genre = useSelector(Selectors.getGenreSelector)
-    const search = useSelector(Selectors.getSearchSelector)
-    const searchBy = useSelector(Selectors.getSearchBySelector)
-    const refreshRequred = useSelector(Selectors.getRefreshRequiredValue)
+    const refreshRequred = useSelector(Selectors.getRefreshRequiredFlagSelector)
 
     useEffect(() => {
-        const defaultLimit = '12'
         const params: Record<string, string> = {
             sortBy,
             sortOrder,
-            search,
+            search: searchQuery,
             searchBy,
-            filter: genre,
-            limit: defaultLimit,
+            filter: genre === 'All' ? '' : genre,
+            limit,
+            offset,
         }
         dispatch(fetchMoviesBegin())
         const url = useCreateUrl(MoviesRoute, params)
@@ -44,7 +52,15 @@ const MovieList: React.FC = () => {
             .catch((e: Error) => {
                 dispatch(fetchMoviesError(e.message))
             })
-    }, [genre, sortBy, sortOrder, search, searchBy, refreshRequred])
+    }, [
+        genre,
+        sortBy,
+        sortOrder,
+        searchQuery,
+        searchBy,
+        offset,
+        refreshRequred,
+    ])
 
     return (
         <>

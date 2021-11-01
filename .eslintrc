@@ -10,7 +10,7 @@
         "plugin:prettier/recommended",
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:react/recommended",
+        "plugin:react/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -33,7 +33,7 @@
     "rules": {
         "indent": "off",
         "@typescript-eslint/indent": "off",
-        "prettier/prettier": "error",
+        "prettier/prettier": ["error", {"singleQuote": true, "parser": "typescript", "tabWidth": 4, "semi": false}],
         "linebreak-style": ["error", "windows"],
         "quotes": ["error", "single"],
         "semi": ["error", "never"],

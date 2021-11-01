@@ -1,5 +1,17 @@
 import React, { useState } from 'react'
-import { ErrorBoundary, Footer, Header, MovieList } from 'Components'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Redirect,
+    Route,
+} from 'react-router-dom'
+import {
+    ErrorBoundary,
+    Footer,
+    Header,
+    MovieList,
+    PageNotFound,
+} from 'Components'
 import { Context, movieContextModel } from 'Components/Context'
 import { Provider } from 'react-redux'
 import store from './Store'
@@ -9,13 +21,25 @@ const App: React.FC = () => {
     return (
         <>
             <Provider store={store}>
-                <Context.Provider value={{ context, setContext }}>
-                    <Header isSearch={!context?.movieId} />
-                    <ErrorBoundary>
-                        <MovieList />
-                    </ErrorBoundary>
+                <Router>
+                    <Switch>
+                        <Route path="/" exact>
+                            <Redirect to="/search" />
+                        </Route>
+                        <Route path="/search/:genre?/:searchQuery?">
+                            <Context.Provider value={{ context, setContext }}>
+                                <Header />
+                                <ErrorBoundary>
+                                    <MovieList />
+                                </ErrorBoundary>
+                            </Context.Provider>
+                        </Route>
+                        <Route path="*">
+                            <PageNotFound />
+                        </Route>
+                    </Switch>
                     <Footer />
-                </Context.Provider>
+                </Router>
             </Provider>
         </>
     )

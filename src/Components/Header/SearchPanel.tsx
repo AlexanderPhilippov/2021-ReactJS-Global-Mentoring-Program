@@ -1,20 +1,30 @@
 import image from 'Assets/Images/movies-tiles.jpg'
 import { openAddMovieModal } from 'Components/Modal/actions'
-import { setSearchValue } from 'Components/MovieList/actions'
 import React, { useRef } from 'react'
+import { useParams, useHistory, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import HeaderTextLogo from './HeaderTextLogo'
 import './styles.scss'
 
 const SearchPanel: React.FC = () => {
     const ref = useRef<HTMLInputElement>(null)
+    const { genre, searchQuery } =
+        useParams<{ genre: string; searchQuery: string }>()
+    const location = useLocation()
+    const history = useHistory()
     const dispatch = useDispatch()
+    const searchParams = new URLSearchParams(location.search)
+
     const handleClick = () => {
-        dispatch(setSearchValue(ref.current?.value || ''))
+        history.push({
+            pathname: `/search/${genre || 'All'}/${ref.current?.value || ''}`,
+            search: searchParams.toString(),
+        })
     }
     const handleAddMovie = () => {
         dispatch(openAddMovieModal())
     }
+
     return (
         <>
             <img className="header__image" src={image} />
@@ -31,6 +41,7 @@ const SearchPanel: React.FC = () => {
                     id="searchMovieInput"
                     type="text"
                     placeholder="What do you want to watch?"
+                    defaultValue={searchQuery || ''}
                     ref={ref}
                 />
                 <input type="button" value="search" onClick={handleClick} />

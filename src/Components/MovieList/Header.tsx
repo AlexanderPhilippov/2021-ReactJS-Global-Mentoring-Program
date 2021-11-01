@@ -1,32 +1,12 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import classnames from 'classnames'
-import { SortOrder } from './models'
-import { setMoviesGenre, setSortBy, setSortOrder } from './actions'
+import { useSelector } from 'react-redux'
+import { useLocation, useHistory, NavLink, useParams } from 'react-router-dom'
+import { SortBy, SortOrder } from './models'
 import * as Selectors from './selectors'
 
-const GenreLink: React.FC<{
-    name: string
-    isSelected?: boolean
-}> = ({ name, isSelected }) => {
-    const dispatch = useDispatch()
-    const handleClick = () => {
-        dispatch(setMoviesGenre(name))
-    }
-    return (
-        <div
-            className={classnames('movie-list-header__genre-link', {
-                active: isSelected,
-            })}
-            onClick={handleClick}
-        >
-            {name || 'all'}
-        </div>
-    )
-}
 const MoviesHeader: React.FC = () => {
     const genres = [
-        '',
+        'All',
         'Documentary',
         'Comedy',
         'Horror',
@@ -34,34 +14,50 @@ const MoviesHeader: React.FC = () => {
         'Drama',
         'Animation',
     ]
-
-    const sortOrder = useSelector(Selectors.getSortOrderSelector)
-    const genre = useSelector(Selectors.getGenreSelector)
+    const location = useLocation()
+    const history = useHistory()
+    const searchParams = new URLSearchParams(location.search)
+    const sortOrder = searchParams.get('sortOrder') || SortOrder.DESC
+    const sortBy = searchParams.get('sortBy') || SortBy.GENRE
+    const { genre, searchQuery } =
+        useParams<{ genre: string; searchQuery: string }>()
     const totalAmount = useSelector(Selectors.getTotalAmountSelector)
 
-    const dispatch = useDispatch()
+    const pushToHistory = () => {
+        history.push({
+            pathname: location.pathname,
+            search: searchParams.toString(),
+        })
+    }
 
     const handleChange = (e: React.FormEvent<HTMLSelectElement>) => {
-        dispatch(setSortBy(e.currentTarget.value))
+        searchParams.set('sortBy', e.currentTarget.value)
+        pushToHistory()
     }
 
     const handleChangeSortOrder = () => {
-        dispatch(
-            setSortOrder(
-                sortOrder === SortOrder.DESC ? SortOrder.ASC : SortOrder.DESC
-            )
+        searchParams.set(
+            'sortOrder',
+            sortOrder === SortOrder.DESC ? SortOrder.ASC : SortOrder.DESC
         )
+        pushToHistory()
     }
+
     return (
         <div className="movie-list-header">
             <div className="movie-list-header__genres">
                 {genres.map((genreName) => {
                     return (
-                        <GenreLink
+                        <NavLink
                             key={genreName}
-                            name={genreName}
-                            isSelected={genreName === genre}
-                        />
+                            to={`/search/${genreName}/${
+                                searchQuery || ''
+                            }?${searchParams.toString()}`}
+                            className="movie-list-header__genre-link"
+                            isActive={() => genreName === (genre || 'All')}
+                        >
+                            {genreName}
+                        </NavLink>
                     )
                 })}
             </div>
@@ -75,10 +71,10 @@ const MoviesHeader: React.FC = () => {
                         ({sortOrder})
                     </span>
                 </div>
-                <select onChange={handleChange}>
-                    <option value="genres">genre</option>
-                    <option value="vote_average">rating</option>
-                    <option value="release_date">release date</option>
+                <select onChange={handleChange} defaultValue={sortBy}>
+                    <option value={SortBy.GENRE}>genre</option>
+                    <option value={SortBy.VOTE}>rating</option>
+                    <option value={SortBy.RELEASE}>release date</option>
                 </select>
             </div>
             <div className="movie-list-header__total">
