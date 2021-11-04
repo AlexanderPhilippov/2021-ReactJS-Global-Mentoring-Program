@@ -1,6 +1,14 @@
 # 2021-ReactJS-Global-Mentoring-Program
-API:
+
+## API:
 - https://github.com/VarvaraZadnepriak/MoviesAPI.ReactJS
-- https://github.com/AlexanderPhilippov/MoviesAPI.ReactJS (fork)
-1. npm install
-1. npm start
+- https://github.com/AlexanderPhilippov/MoviesAPI.ReactJS (Fork)
+
+### Install Dependencies
+```bash
+npm install
+```
+### Run Application
+```bash
+npm start
+```
