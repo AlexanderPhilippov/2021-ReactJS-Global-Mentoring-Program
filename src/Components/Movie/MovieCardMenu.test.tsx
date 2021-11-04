@@ -4,22 +4,37 @@
 
 import React from 'react'
 import MovieCardMenu from './MovieCardMenu'
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 
-it('MovieCardMenu', () => {
-    const mockStore = configureStore()
+const mockStore = configureStore()
+const mockDispatch = jest.fn()
+
+jest.mock('react-redux', () => ({
+    ...jest.requireActual('react-redux'),
+    useDispatch: () => mockDispatch,
+}))
+
+const setIsOpenMock = jest.fn()
+jest.mock('react', () => ({
+    ...jest.requireActual('react'),
+    useState: () => [true, setIsOpenMock],
+}))
+
+it('MovieCardMenu Opened', () => {
     const store = mockStore({})
-    const mockDispatch = jest.fn()
-    jest.mock('react-redux', () => ({
-        useDispatch: () => mockDispatch,
-    }))
-    const { debug } = render(
+    const { asFragment, debug, getByText } = render(
         <Provider store={store}>
             <MovieCardMenu movieId={1234} />
         </Provider>
     )
     console.log(debug())
-    expect(mockDispatch).not.toHaveBeenCalled()
+    fireEvent.click(getByText(/edit/i))
+    fireEvent.click(getByText(/delete/i))
+    fireEvent.click(getByText(/close menu/i))
+    console.log(debug())
+    expect(mockDispatch).toBeCalledTimes(2)
+    expect(setIsOpenMock).toBeCalledTimes(3)
+    expect(asFragment()).toMatchSnapshot()
 })
