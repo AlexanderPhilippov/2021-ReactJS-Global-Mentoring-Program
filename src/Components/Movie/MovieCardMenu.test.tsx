@@ -24,16 +24,14 @@ jest.mock('react', () => ({
 
 it('MovieCardMenu Opened', () => {
     const store = mockStore({})
-    const { asFragment, debug, getByText } = render(
+    const { asFragment, getByText } = render(
         <Provider store={store}>
             <MovieCardMenu movieId={1234} />
         </Provider>
     )
-    console.log(debug())
     fireEvent.click(getByText(/edit/i))
     fireEvent.click(getByText(/delete/i))
     fireEvent.click(getByText(/close menu/i))
-    console.log(debug())
     expect(mockDispatch).toBeCalledTimes(2)
     expect(setIsOpenMock).toBeCalledTimes(3)
     expect(asFragment()).toMatchSnapshot()
