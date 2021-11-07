@@ -12,5 +12,6 @@ export default async (): Promise<Config.InitialOptions> => {
             '\\.(css)$': 'identity-obj-proxy',
         },
         moduleDirectories: ['node_modules', 'src'],
+        testPathIgnorePatterns: ['cypress'],
     }
 }

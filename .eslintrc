@@ -3,14 +3,17 @@
     "env": {
         "browser": true,
         "es6": true,
-        "node": true
+        "node": true,
+        "jest": true,
+        "cypress/globals": true
     },
     "extends": [
         "prettier",
         "plugin:prettier/recommended",
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:cypress/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -29,7 +32,7 @@
         }
     },
     
-    "plugins": ["react", "@typescript-eslint/eslint-plugin", "import", "prettier"],
+    "plugins": ["react", "@typescript-eslint/eslint-plugin", "import", "prettier", "cypress"],
     "rules": {
         "indent": "off",
         "@typescript-eslint/indent": "off",
@@ -44,6 +47,12 @@
             }
         ],
         "@typescript-eslint/no-var-requires": 0,
-        "eol-last": ["error", "always"]
+        "eol-last": ["error", "always"],
+        "cypress/no-assigning-return-values": "error",
+        "cypress/no-unnecessary-waiting": "error",
+        "cypress/assertion-before-screenshot": "warn",
+        "cypress/no-force": "warn",
+        "cypress/no-async-tests": "error",
+        "cypress/no-pause": "error"
     }
 }
