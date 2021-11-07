@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Interactive components tests Snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="movie-list"
+  >
+    <div
+      class="movie-list-header"
+    >
+      <div
+        class="movie-list-header__genres"
+      >
+        <a
+          aria-current="page"
+          class="movie-list-header__genre-link active"
+          href="/search/All/"
+        >
+          All
+        </a>
+        <a
+          class="movie-list-header__genre-link"
+          href="/search/Documentary/"
+        >
+          Documentary
+        </a>
+        <a
+          class="movie-list-header__genre-link"
+          href="/search/Comedy/"
+        >
+          Comedy
+        </a>
+        <a
+          class="movie-list-header__genre-link"
+          href="/search/Horror/"
+        >
+          Horror
+        </a>
+        <a
+          class="movie-list-header__genre-link"
+          href="/search/Crime/"
+        >
+          Crime
+        </a>
+        <a
+          class="movie-list-header__genre-link"
+          href="/search/Drama/"
+        >
+          Drama
+        </a>
+        <a
+          class="movie-list-header__genre-link"
+          href="/search/Animation/"
+        >
+          Animation
+        </a>
+      </div>
+      <div
+        class="movie-list-header__sorting"
+      >
+        <div
+          class=""
+        >
+          sort by
+          <span
+            class="movie-list-header__sorting_order"
+          >
+            (desc)
+          </span>
+        </div>
+        <select>
+          <option
+            selected=""
+            value="genres"
+          >
+            genre
+          </option>
+          <option
+            value="vote_average"
+          >
+            rating
+          </option>
+          <option
+            value="release_date"
+          >
+            release date
+          </option>
+        </select>
+      </div>
+      <div
+        class="movie-list-header__total"
+      >
+        <span>
+          0
+        </span>
+         movies found
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

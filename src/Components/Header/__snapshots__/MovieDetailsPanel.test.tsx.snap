@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieDetailsPanel 1`] = `
+<DocumentFragment>
+  <div
+    class="header__text-logo"
+  >
+    <span>
+      netflix
+    </span>
+    roulette
+  </div>
+  <img
+    class="header__search-icon"
+    src=""
+  />
+  <div
+    class="movie-details"
+  >
+    <div
+      class="movie-details__poster"
+    >
+      <img
+        src="http://test.images.com/poster/image"
+      />
+    </div>
+    <div
+      class="movie-details__info"
+    >
+      <div
+        class="movie-details__info-title"
+      >
+        Jest test movie object
+      </div>
+      <div
+        class="movie-details__info-rating"
+      >
+        10
+      </div>
+      <div
+        class="movie-details__info-genres"
+      >
+        action, dramma, comedy
+      </div>
+      <div
+        class="movie-details__info-year"
+      >
+        2021
+      </div>
+      <div
+        class="movie-details__info-runtime"
+      >
+        3h 0min
+      </div>
+      <div
+        class="movie-details__info-overview"
+      >
+        Jest is tests
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
