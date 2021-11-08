@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieCardMenu Opened 1`] = `
+<DocumentFragment>
+  <div
+    class="movie-card__menu_opened"
+  >
+    <div>
+      Edit
+    </div>
+    <div>
+      Delete
+    </div>
+    <div>
+      Close menu
+    </div>
+  </div>
+</DocumentFragment>
+`;

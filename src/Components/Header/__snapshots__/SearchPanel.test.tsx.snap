@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieDetailsPanel 1`] = `
+<DocumentFragment>
+  <img
+    class="header__image"
+    src=""
+  />
+  <div
+    class="header__text-logo"
+  >
+    <span>
+      netflix
+    </span>
+    roulette
+  </div>
+  <input
+    class="header__add-movie_button"
+    type="button"
+    value="+ add movie"
+  />
+  <div
+    class="header__search"
+  >
+    <label
+      for="searchMovieInput"
+    >
+      Find your movie
+    </label>
+    <input
+      id="searchMovieInput"
+      placeholder="What do you want to watch?"
+      type="text"
+      value=""
+    />
+    <input
+      type="button"
+      value="search"
+    />
+  </div>
+</DocumentFragment>
+`;

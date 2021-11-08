@@ -1,7 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCssAssetWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
@@ -38,7 +37,10 @@ module.exports = {
                         loader: 'babel-loader',
                         options: {
                             presets: [
-                                '@babel/preset-env',
+                                [
+                                    '@babel/preset-env',
+                                    { targets: { node: 'current' } },
+                                ],
                                 '@babel/preset-react',
                                 '@babel/preset-typescript',
                             ],
@@ -81,7 +83,6 @@ module.exports = {
     ],
     optimization: {
         minimizer: [
-            new OptimizeCssAssetWebpackPlugin(),
             new TerserWebpackPlugin({
                 extractComments: false,
             }),
