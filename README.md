@@ -12,3 +12,15 @@ npm install
 ```bash
 npm start
 ```
+### Tests
+```
+npm run test
+npm run test:cover
+```
+
+### E2E Tests
+Before run you need to start API and Application
+then use next command
+```
+npx cypress open
+```
