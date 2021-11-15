@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
-import App from './App'
+import App from './Components/Footer'
 
 const renderHtml = (html: string) => `
 <!DOCTYPE html>
@@ -17,10 +17,15 @@ const renderHtml = (html: string) => `
 </html>
 `
 export default () => {
-    return (req: unknown, res: { send: (html: string) => void }): void => {
-        const htmlString = ReactDOMServer.renderToString(
-            React.createElement(App)
-        )
+    return (
+        req: unknown,
+        res: {
+            send: (html: string) => void
+            contentType: (type: string) => void
+        }
+    ): void => {
+        const htmlString = ReactDOMServer.renderToString(<App />)
+        res.contentType('text/html; charset=utf-8')
         res.send(renderHtml(htmlString))
     }
 }
