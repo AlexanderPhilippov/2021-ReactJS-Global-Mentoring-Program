@@ -4,8 +4,8 @@
   "description": "EPAM React JS Global Mentoring Programm 2021",
   "private": true,
   "scripts": {
-    "start:client": "cross-env NODE_ENV=development webpack --watch",
-    "start:server": "cross-env NODE_ENV=development nodemon server/index.ts",
+    "start:client": "webpack --watch",
+    "start:server": "nodemon server/index.ts --exec babel-node --plugins css-modules-transform",
     "start": "cross-env NODE_ENV=development npm-run-all -l -p start:*",
     "build": "cross-env NODE_ENV=production webpack",
     "build:dev": "cross-env NODE_ENV=development webpack",
@@ -38,6 +38,7 @@
     "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.7",
     "@babel/eslint-plugin": "^7.14.5",
+    "@babel/node": "^7.16.0",
     "@babel/preset-env": "^7.15.6",
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.15.0",
