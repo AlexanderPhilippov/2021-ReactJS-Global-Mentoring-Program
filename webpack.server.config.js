@@ -1,6 +1,5 @@
 const path = require('path')
 const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin')
-const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
     mode: process.env.NODE_ENV,
@@ -62,5 +61,4 @@ module.exports = {
     performance: {
         hints: false,
     },
-    externals: [nodeExternals({ allowlist: [/\.(?!(?:tsx?|json)$).{1,5}$/i] })],
 }
