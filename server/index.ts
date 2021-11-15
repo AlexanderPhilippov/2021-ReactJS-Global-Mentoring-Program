@@ -1,16 +1,15 @@
-const express = require('express')
+import express from 'express'
+import serverRenderer from '../src/serverRenderer'
 
 const server = express()
 
-server.get('/', (req: unknown, res: { redirect: (url: string) => void }) => {
+server.get('/', (req, res) => {
     res.redirect('/search')
 })
 
 server.use(express.static('dist'))
 
-server.get('/search', (req: unknown, res: { send: (html: string) => void }) => {
-    res.send(require('../src/serverRenderer'))
-})
+server.use(serverRenderer())
 
 server.listen(3000, () =>
     console.log('Server running on http://localhost:3000')
