@@ -1,6 +1,9 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
+import { StaticRouter } from 'react-router-dom'
 import App from './App'
+import { Provider } from 'react-redux'
+import initialStore from './Store'
 
 const renderHtml = (html: string) => {
     return `
@@ -14,21 +17,27 @@ const renderHtml = (html: string) => {
             <script defer src="/vendors-node_modules_babel_polyfill_lib_index_js-node_modules_classnames_index_js-node_module-b8abcb.js"></script>
             <script defer src="/main.js"></script>
             <link href="/main.css" rel="stylesheet">
-        </head>
-        <body>
-            <div id="root">${html}</div>
-        </body>
+            </head>
+            <body>
+            <div id="root"><pre>${html}</pre></div>
+            </body>
     </html>
     `
 }
 export default () => {
     return (
-        req: unknown,
+        req: { url: string },
         res: {
             send: (html: string) => void
         }
     ): void => {
-        const htmlString = ReactDOMServer.renderToString(<App />)
+        const htmlString = ReactDOMServer.renderToString(
+            <StaticRouter location={req.url} context={{}}>
+                <Provider store={initialStore}>
+                    <App />
+                </Provider>
+            </StaticRouter>
+        )
         res.send(renderHtml(htmlString))
     }
 }

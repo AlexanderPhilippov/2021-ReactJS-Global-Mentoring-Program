@@ -13,7 +13,7 @@ module.exports = {
         filename: 'server.js',
         libraryTarget: 'commonjs2',
         path: path.join(__dirname, 'dist'),
-        publicPath: '/static/',
+        publicPath: '/',
     },
     resolve: {
         modules: [path.join(__dirname, 'src'), 'node_modules'],
@@ -53,7 +53,14 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|svg|gif|ttf|woff|woff2|eot)/,
-                use: ['null-loader'],
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'images/[hash]-[name].[ext]',
+                        },
+                    },
+                ],
             },
         ],
     },

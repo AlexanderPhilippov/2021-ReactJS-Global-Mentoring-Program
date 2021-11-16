@@ -9,7 +9,7 @@ server.get('/', (req, res) => {
 
 server.use(express.static('dist'))
 
-server.use('/search/:genre?/:searchQuery?', serverRenderer())
+server.use('/', serverRenderer())
 
 server.listen(3000, () =>
     console.log('Server running on http://localhost:3000')
