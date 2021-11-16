@@ -16,8 +16,9 @@ import {
     fetchMoviesError,
     fetchMoviesSuccess,
 } from 'Components/MovieList/actions'
+import { APP_INIT_STORE_STATE } from 'Utils/constants'
 
-const renderHtml = (html: string) => {
+const renderHtml = (html: string, storeState: string) => {
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -26,6 +27,7 @@ const renderHtml = (html: string) => {
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>EPAM React JS Global Mentoring Programm 2021</title>
+            <script async id="${APP_INIT_STORE_STATE}">window.${APP_INIT_STORE_STATE}=${storeState}</script>
             <script defer src="/vendors-node_modules_babel_polyfill_lib_index_js-node_modules_classnames_index_js-node_module-b8abcb.js"></script>
             <script defer src="/main.js"></script>
             <link href="/main.css" rel="stylesheet">
@@ -61,18 +63,18 @@ export default () => {
                         store.dispatch(
                             fetchMoviesSuccess(data as MoviesResponseModel)
                         )
-                        render(JSON.stringify(data))
+                        render()
                     })
                 } else {
                     store.dispatch(fetchMoviesError(response.statusText))
-                    render(response.statusText)
+                    render()
                 }
             })
             .catch((error) => {
                 store.dispatch(fetchMoviesError(error.toString()))
-                render(error.toString())
+                render()
             })
-        const render = (data: string) => {
+        const render = () => {
             const htmlString = ReactDOMServer.renderToString(
                 <StaticRouter location={req.url}>
                     <Provider store={store}>
@@ -80,7 +82,7 @@ export default () => {
                     </Provider>
                 </StaticRouter>
             )
-            res.send(renderHtml(htmlString))
+            res.send(renderHtml(htmlString, JSON.stringify(store.getState())))
         }
     }
 }

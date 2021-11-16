@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router-dom'
 import Movie from 'Components/Movie'
@@ -15,8 +15,10 @@ import {
     fetchMoviesSuccess,
 } from './actions'
 import * as Selectors from './selectors'
+import { APP_INIT_STORE_STATE } from 'Utils/constants'
 
 const MovieList: React.FC = () => {
+    const [isFirstRendering, setIsFirstRendering] = useState(true)
     const dispatch = useDispatch()
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
@@ -32,8 +34,13 @@ const MovieList: React.FC = () => {
 
     const movies = useSelector(Selectors.getMoviesSelector)
     const refreshRequred = useSelector(Selectors.getRefreshRequiredFlagSelector)
-
     useEffect(() => {
+        if (isFirstRendering) {
+            document.getElementById(APP_INIT_STORE_STATE)?.remove()
+            delete window[APP_INIT_STORE_STATE]
+            setIsFirstRendering(false)
+            return
+        }
         const params: Record<string, string> = {
             sortBy,
             sortOrder,
