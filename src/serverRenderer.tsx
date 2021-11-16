@@ -34,25 +34,32 @@ const renderHtml = (html: string, storeState: string) => {
             <link href=${manifiest['main.css']} rel="stylesheet">
             </head>
             <body>
-            <div id="root"><pre>${html}</pre></div>
+            <div id="root">${html}</div>
             </body>
     </html>
     `
 }
 export default () => {
     return (
-        req: { url: string },
+        req: {
+            url: string
+            params: { genre: string; searchQuery: string }
+            query: { sortBy: string; sortOrder: string; searchBy: string }
+        },
         res: {
             send: (html: string) => void
         }
     ): void => {
+        const { genre, searchQuery } = req.params
+        const { sortBy, sortOrder, searchBy } = req.query
+
         const defaultLimit = '12'
         const params: Record<string, string> = {
-            sortBy: SortBy.GENRE,
-            sortOrder: SortOrder.DESC,
-            search: '',
-            searchBy: SearchBy.TITLE,
-            filter: '',
+            sortBy: sortBy || SortBy.GENRE,
+            sortOrder: sortOrder || SortOrder.DESC,
+            search: searchQuery || '',
+            searchBy: searchBy || SearchBy.TITLE,
+            filter: genre === 'All' ? '' : genre,
             limit: defaultLimit,
             offset: '',
         }
@@ -76,8 +83,12 @@ export default () => {
                 render()
             })
         const render = () => {
+            const searchParams = new URLSearchParams(req.query).toString()
+            const clientUrl = `/search/${genre || 'All'}/${
+                searchQuery ? `${searchQuery}/` : ''
+            }${searchParams ? `?${searchParams}` : ''}`
             const htmlString = ReactDOMServer.renderToString(
-                <StaticRouter location={req.url}>
+                <StaticRouter location={clientUrl}>
                     <Provider store={store}>
                         <App />
                     </Provider>
