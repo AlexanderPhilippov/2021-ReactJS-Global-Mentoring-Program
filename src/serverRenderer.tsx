@@ -17,6 +17,7 @@ import {
     fetchMoviesSuccess,
 } from 'Components/MovieList/actions'
 import { APP_INIT_STORE_STATE } from 'Utils/constants'
+import manifiest from '../dist/manifest.json'
 
 const renderHtml = (html: string, storeState: string) => {
     return `
@@ -28,9 +29,9 @@ const renderHtml = (html: string, storeState: string) => {
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>EPAM React JS Global Mentoring Programm 2021</title>
             <script async id="${APP_INIT_STORE_STATE}">window.${APP_INIT_STORE_STATE}=${storeState}</script>
-            <script defer src="/vendors-node_modules_babel_polyfill_lib_index_js-node_modules_classnames_index_js-node_module-b8abcb.js"></script>
-            <script defer src="/main.js"></script>
-            <link href="/main.css" rel="stylesheet">
+            <script defer src=${manifiest['vendors.js']}></script>
+            <script defer src=${manifiest['main.js']}></script>
+            <link href=${manifiest['main.css']} rel="stylesheet">
             </head>
             <body>
             <div id="root"><pre>${html}</pre></div>

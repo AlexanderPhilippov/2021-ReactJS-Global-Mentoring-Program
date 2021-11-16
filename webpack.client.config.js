@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev
@@ -80,6 +81,9 @@ module.exports = {
             filename: isProd ? '[name].[fullhash].css' : '[name].css',
             chunkFilename: '[name].[chunkhash].css',
         }),
+        new WebpackManifestPlugin({
+            filename: 'manifest.json',
+        }),
     ],
     optimization: {
         minimizer: [
@@ -88,7 +92,20 @@ module.exports = {
             }),
         ],
         splitChunks: {
-            chunks: 'all',
+            cacheGroups: {
+                vendors: {
+                    name: 'vendors',
+                    test: /[\\/]node_modules[\\/]/,
+                    chunks: 'all',
+                    minChunks: 1,
+                    priority: -10,
+                },
+                default: {
+                    minChunks: 1,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                },
+            },
         },
     },
     performance: {
