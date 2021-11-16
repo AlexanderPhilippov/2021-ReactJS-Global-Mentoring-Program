@@ -18,6 +18,7 @@ import {
 } from 'Components/MovieList/actions'
 import { APP_INIT_STORE_STATE } from 'Utils/constants'
 import manifiest from '../dist/manifest.json'
+import { Footer, PageNotFound } from 'Components'
 
 const renderHtml = (html: string, storeState: string) => {
     return `
@@ -32,12 +33,35 @@ const renderHtml = (html: string, storeState: string) => {
             <script defer src=${manifiest['vendors.js']}></script>
             <script defer src=${manifiest['main.js']}></script>
             <link href=${manifiest['main.css']} rel="stylesheet">
-            </head>
-            <body>
+        </head>
+        <body>
             <div id="root">${html}</div>
-            </body>
+        </body>
     </html>
     `
+}
+
+export const renderNotFoundPage = () => {
+    return (
+        req: {
+            url: string
+        },
+        res: {
+            status: (code: number) => void
+            send: (html: string) => void
+        }
+    ): void => {
+        const htmlString = ReactDOMServer.renderToString(
+            <StaticRouter location={req.url}>
+                <Provider store={store}>
+                    <PageNotFound />
+                    <Footer />
+                </Provider>
+            </StaticRouter>
+        )
+        res.status(404)
+        res.send(renderHtml(htmlString, JSON.stringify(store.getState())))
+    }
 }
 export default () => {
     return (
