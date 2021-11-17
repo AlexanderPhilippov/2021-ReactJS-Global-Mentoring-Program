@@ -5,7 +5,7 @@ import SearchIcon from 'Assets/Images/search.png'
 import { useSelector } from 'react-redux'
 import { AppState } from 'src/Store/rootReducer'
 import { getMovieByIdSelector } from 'Components/MovieList/selectors'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory, useLocation, Link } from 'react-router-dom'
 
 const MovieDetailsPanel: React.FC = () => {
     const history = useHistory()
@@ -20,9 +20,9 @@ const MovieDetailsPanel: React.FC = () => {
             search: searchParams.toString(),
         })
     }
-    const handleClick = () => {
-        clearMovieFromQuery()
-    }
+
+    searchParams.delete('movie')
+    const linkTo = `${location.pathname}?${searchParams.toString()}`
 
     const movie = useSelector((state: AppState) =>
         getMovieByIdSelector(state, movieId)
@@ -37,11 +37,9 @@ const MovieDetailsPanel: React.FC = () => {
     return (
         <>
             <HeaderTextLogo />
-            <img
-                className="header__search-icon"
-                src={SearchIcon}
-                onClick={handleClick}
-            />
+            <Link to={linkTo}>
+                <img className="header__search-icon" src={SearchIcon} />
+            </Link>
             {movie && <MovieDetails {...movie} />}
         </>
     )

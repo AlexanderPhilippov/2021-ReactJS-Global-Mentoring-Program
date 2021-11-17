@@ -4,8 +4,8 @@
   "description": "EPAM React JS Global Mentoring Programm 2021",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=production webpack && npm-run-all -l -p start:*",
-    "start:client": "cross-env NODE_ENV=production webpack --watch",
+    "start": "cross-env NODE_ENV=development webpack && npm-run-all -l -p start:*",
+    "start:client": "cross-env NODE_ENV=development webpack --watch",
     "start:server": "nodemon dist/server.js --watch server/index.ts",
     "build": "cross-env NODE_ENV=production webpack",
     "build:dev": "cross-env NODE_ENV=development webpack",
