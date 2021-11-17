@@ -13,8 +13,7 @@
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --color --fix",
     "lint:styles": "npx stylelint **/*.scss",
     "lint:styles:fix": "npx stylelint **/*.scss --fix",
-    "format:ts": "npx prettier --write **/*.ts",
-    "format:tsx": "npx prettier --write **/*.tsx",
+    "format": "npx prettier --write **/*.tsx **/*.ts",
     "test": "jest",
     "test:cover": "jest --coverage"
   },
