@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Switch, Redirect, Route } from 'react-router-dom'
 import {
     ErrorBoundary,
@@ -7,10 +7,8 @@ import {
     MovieList,
     PageNotFound,
 } from 'Components'
-import { Context, movieContextModel } from 'Components/Context'
 
 const App: React.FC = () => {
-    const [context, setContext] = useState<movieContextModel>()
     return (
         <>
             <Switch>
@@ -18,12 +16,10 @@ const App: React.FC = () => {
                     <Redirect to="/search" />
                 </Route>
                 <Route path="/search/:genre?/:searchQuery?">
-                    <Context.Provider value={{ context, setContext }}>
-                        <Header />
-                        <ErrorBoundary>
-                            <MovieList />
-                        </ErrorBoundary>
-                    </Context.Provider>
+                    <Header />
+                    <ErrorBoundary>
+                        <MovieList />
+                    </ErrorBoundary>
                 </Route>
                 <Route path="*">
                     <PageNotFound />

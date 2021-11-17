@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import HeaderTextLogo from './HeaderTextLogo'
 import MovieDetails from 'Components/MovieDetails'
 import SearchIcon from 'Assets/Images/search.png'
-import { Context } from 'Components/Context'
 import { useSelector } from 'react-redux'
 import { AppState } from 'src/Store/rootReducer'
 import { getMovieByIdSelector } from 'Components/MovieList/selectors'
@@ -12,7 +11,7 @@ const MovieDetailsPanel: React.FC = () => {
     const history = useHistory()
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
-    const { context, setContext } = useContext(Context)
+    const movieId = Number(searchParams.get('movie'))
 
     const clearMovieFromQuery = () => {
         searchParams.delete('movie')
@@ -23,18 +22,15 @@ const MovieDetailsPanel: React.FC = () => {
     }
     const handleClick = () => {
         clearMovieFromQuery()
-        window.scrollTo({ top: context?.pageYOffset, behavior: 'smooth' })
-        setContext()
     }
 
     const movie = useSelector((state: AppState) =>
-        getMovieByIdSelector(state, context?.movieId)
+        getMovieByIdSelector(state, movieId)
     )
 
     useEffect(() => {
         if (!movie) {
             clearMovieFromQuery()
-            setContext()
         }
     }, [movie])
 
