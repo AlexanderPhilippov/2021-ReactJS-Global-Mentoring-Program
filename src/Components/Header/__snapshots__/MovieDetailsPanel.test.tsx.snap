@@ -10,10 +10,14 @@ exports[`MovieDetailsPanel 1`] = `
     </span>
     roulette
   </div>
-  <img
-    class="header__search-icon"
-    src=""
-  />
+  <a
+    href="/"
+  >
+    <img
+      class="header__search-icon"
+      src=""
+    />
+  </a>
   <div
     class="movie-details"
   >
