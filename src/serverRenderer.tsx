@@ -67,6 +67,7 @@ export default () => {
     return (
         req: {
             url: string
+            originalUrl: string
             params: { genre: string; searchQuery: string }
             query: { sortBy: string; sortOrder: string; searchBy: string }
         },
@@ -106,13 +107,10 @@ export default () => {
                 store.dispatch(fetchMoviesError(error.toString()))
                 render()
             })
+
         const render = () => {
-            const searchParams = new URLSearchParams(req.query).toString()
-            const clientUrl = `/search/${genre || 'All'}/${
-                searchQuery ? `${searchQuery}/` : ''
-            }${searchParams ? `?${searchParams}` : ''}`
             const htmlString = ReactDOMServer.renderToString(
-                <StaticRouter location={clientUrl}>
+                <StaticRouter location={req.originalUrl}>
                     <Provider store={store}>
                         <App />
                     </Provider>
