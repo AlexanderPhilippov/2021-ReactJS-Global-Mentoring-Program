@@ -1,10 +1,5 @@
-import React, { useState } from 'react'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Redirect,
-    Route,
-} from 'react-router-dom'
+import React from 'react'
+import { Switch, Redirect, Route } from 'react-router-dom'
 import {
     ErrorBoundary,
     Footer,
@@ -12,35 +7,25 @@ import {
     MovieList,
     PageNotFound,
 } from 'Components'
-import { Context, movieContextModel } from 'Components/Context'
-import { Provider } from 'react-redux'
-import store from './Store'
 
 const App: React.FC = () => {
-    const [context, setContext] = useState<movieContextModel>()
     return (
         <>
-            <Provider store={store}>
-                <Router>
-                    <Switch>
-                        <Route path="/" exact>
-                            <Redirect to="/search" />
-                        </Route>
-                        <Route path="/search/:genre?/:searchQuery?">
-                            <Context.Provider value={{ context, setContext }}>
-                                <Header />
-                                <ErrorBoundary>
-                                    <MovieList />
-                                </ErrorBoundary>
-                            </Context.Provider>
-                        </Route>
-                        <Route path="*">
-                            <PageNotFound />
-                        </Route>
-                    </Switch>
-                    <Footer />
-                </Router>
-            </Provider>
+            <Switch>
+                <Route path="/" exact>
+                    <Redirect to="/search" />
+                </Route>
+                <Route path="/search/:genre?/:searchQuery?">
+                    <Header />
+                    <ErrorBoundary>
+                        <MovieList />
+                    </ErrorBoundary>
+                </Route>
+                <Route path="*">
+                    <PageNotFound />
+                </Route>
+            </Switch>
+            <Footer />
         </>
     )
 }

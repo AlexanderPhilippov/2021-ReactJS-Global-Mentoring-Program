@@ -1,29 +1,18 @@
-import { Context } from 'Components/Context'
-import React, { useContext } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import React from 'react'
+import { useLocation, Link } from 'react-router-dom'
 import { MovieProps } from './models'
 import MovieCardMenu from './MovieCardMenu'
 import './styles.scss'
 
 const Movie: React.FC<MovieProps> = ({ movie }) => {
-    const { setContext } = useContext(Context)
-
-    const history = useHistory()
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
 
-    const handleClick = () => {
-        searchParams.set('movie', movie.id.toString())
-        history.push({
-            pathname: location.pathname,
-            search: searchParams.toString(),
-        })
-        setContext({ movieId: movie.id, pageYOffset: window.scrollY })
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
+    searchParams.set('movie', movie.id.toString())
+    const linkTo = `${location.pathname}?${searchParams.toString()}`
 
     return (
-        <div className="movie-card" onClick={handleClick}>
+        <Link className="movie-card" to={linkTo}>
             <MovieCardMenu movieId={movie.id} />
             <div className="movie-card__image">
                 <img src={movie.poster_path} alt={`${movie.title} poster`} />
@@ -33,7 +22,7 @@ const Movie: React.FC<MovieProps> = ({ movie }) => {
                 {movie.release_date?.split('-')[0]}
             </div>
             <div className="movie-card__genres">{movie.genres.join(', ')}</div>
-        </div>
+        </Link>
     )
 }
 

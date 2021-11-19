@@ -1,3 +1,5 @@
+import { AppState } from 'src/Store/rootReducer'
+import { APP_INIT_STORE_STATE } from 'Utils/constants'
 import actionTypes from './actionTypes'
 import {
     MovieListState,
@@ -8,8 +10,17 @@ import {
     SearchBy,
 } from './models'
 
+const initMovieListState = () => {
+    const defaultState = { isLoading: false }
+    if (typeof window !== 'undefined') {
+        const serializedState = window[APP_INIT_STORE_STATE] as AppState
+        return serializedState?.movies || defaultState
+    }
+    return defaultState
+}
+
 export const movieListReducer = (
-    state: MovieListState = { isLoading: false },
+    state: MovieListState = initMovieListState(),
     action: MovieListAction
 ): MovieListState => {
     switch (action.type) {
@@ -24,14 +35,23 @@ export const movieListReducer = (
     }
 }
 
-export const movieListFilterReducer = (
-    state: MovieListFilterState = {
+const initFilterState = () => {
+    const defaultState = {
         genre: SearchBy.ALL,
         sortBy: SearchBy.GENRES,
         sortOrder: SortOrder.DESC,
         search: '',
         searchBy: SearchBy.TITLE,
-    },
+    }
+    if (typeof window !== 'undefined') {
+        const serializedState = window[APP_INIT_STORE_STATE] as AppState
+        return serializedState?.filter || defaultState
+    }
+    return defaultState
+}
+
+export const movieListFilterReducer = (
+    state: MovieListFilterState = initFilterState(),
     action: MovieListFilterAction
 ): MovieListFilterState => {
     switch (action.type) {
