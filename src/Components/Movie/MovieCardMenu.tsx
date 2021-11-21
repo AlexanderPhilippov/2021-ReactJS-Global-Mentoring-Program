@@ -17,6 +17,7 @@ const MovieCardMenu: React.FC<{ movieId: number }> = ({ movieId }) => {
     }
 
     const handleClose = (e: React.MouseEvent) => {
+        e.preventDefault()
         e.stopPropagation()
         setIsOpen((prevState) => !prevState)
     }
