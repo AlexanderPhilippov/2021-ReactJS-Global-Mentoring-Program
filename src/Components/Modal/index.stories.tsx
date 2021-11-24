@@ -30,9 +30,7 @@ export default {
     component: Modal,
 } as ComponentMeta<typeof Modal>
 
-const Template: ComponentStory<typeof Modal> = (props) => {
-    return <Modal {...props} />
-}
+const Template: ComponentStory<typeof Modal> = (props) => <Modal {...props} />
 
 export const Add = Template.bind({})
 Add.args = { children: <MovieForm /> }
