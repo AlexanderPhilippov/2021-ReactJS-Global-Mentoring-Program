@@ -1,4 +1,17 @@
+const webpackConfig = require('../webpack.client.config');
+
 module.exports = {
+  webpackFinal: (config) => ({
+    ...config,
+    resolve: {
+      ...config.resolve,
+      ...webpackConfig.resolve,
+      alias: {
+        ...config.resolve.alias,
+        ...webpackConfig.resolve.aliases,
+      },
+    },
+  }),
   core: {
     builder: 'webpack5',
   },

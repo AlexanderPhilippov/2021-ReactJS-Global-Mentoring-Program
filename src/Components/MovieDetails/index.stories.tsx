@@ -1,5 +1,6 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
+import movieMock from '../../../.storybook/movieMock.json'
 
 import MovieDetails from '.'
 
@@ -17,19 +18,4 @@ const Template: ComponentStory<typeof MovieDetails> = (props) => {
 }
 
 export const Movie = Template.bind({})
-Movie.args = {
-    id: 1,
-    genres: ['Comedy', 'Action'],
-    overview:
-        'Do American mass shootings change the way you watch gun violence in Hollywood movies? Should they? Nobody blames moviegoers for enjoying that brand of entertainment, no matter how many bullets fly for two straight hours.',
-    release_date: '2016-01-01',
-    runtime: 83,
-    poster_path:
-        'https://m.media-amazon.com/images/M/MV5BMjE0NTE3MjMwNV5BMl5BanBnXkFtZTgwMDc5NjQxODE@._V1_FMjpg_UY720_.jpg',
-    vote_average: 6.2,
-    title: 'Grimsby',
-    budget: 35000000,
-    revenue: 25000000,
-    vote_count: 98000,
-    tagline: 'One secret agent. One complete idiot',
-}
+Movie.args = movieMock
