@@ -38,7 +38,11 @@ const MovieDetailsPanel: React.FC = () => {
         <>
             <HeaderTextLogo />
             <Link to={linkTo}>
-                <img className="header__search-icon" src={SearchIcon} />
+                <img
+                    className="header__search-icon"
+                    src={SearchIcon}
+                    alt="search icon"
+                />
             </Link>
             {movie && <MovieDetails {...movie} />}
         </>

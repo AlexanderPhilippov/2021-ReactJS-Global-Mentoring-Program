@@ -27,7 +27,7 @@ const SearchPanel: React.FC = () => {
 
     return (
         <>
-            <img className="header__image" src={image} />
+            <img className="header__image" src={image} alt="header image" />
             <HeaderTextLogo />
             <input
                 className="header__add-movie_button"

@@ -59,6 +59,20 @@ module.exports = {
                 ],
             },
             {
+                test: /\.css$/i,
+                use: [
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: ['postcss-preset-env'],
+                            },
+                        },
+                    },
+                ],
+            },
+            {
                 test: /\.(png|jpg|svg|gif|ttf|woff|woff2|eot)/,
                 use: [
                     {
